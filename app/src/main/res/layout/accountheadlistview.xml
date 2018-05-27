@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/accountheadList"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    >
+
+    <TextView
+        android:id="@+id/tvHeadId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Head Id"
+        />
+    <TextView
+        android:id="@+id/tvAccountHeadName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:text="Income Expense Head Name"
+        />
+
+</LinearLayout>
