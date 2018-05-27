@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.arup.personalaccount.Fragment.fragmentAccountHead;
+import com.example.arup.personalaccount.Fragment.fragmentAccountHeadList;
 import com.example.arup.personalaccount.Fragment.fragmentDashboard;
 import com.example.arup.personalaccount.Fragment.fragmentExpenseList;
 import com.example.arup.personalaccount.Fragment.fragmentExpenseTrans;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,""+R.id.itmAccountHead,Toast.LENGTH_LONG).show();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frmMainContainer,new fragmentAccountHead());
+            fragmentTransaction.replace(R.id.frmMainContainer,new fragmentAccountHeadList());
             fragmentTransaction.commit();
         }
         else if(item.getItemId()==R.id.itmPaymentMethod){

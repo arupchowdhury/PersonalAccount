@@ -22,8 +22,8 @@ import java.util.List;
 public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> implements Filterable {
     Context context;
     ArrayList<IncomeExpenseHead> incomeExpenseHeadslist;
-    ArrayList<IncomeExpenseHead>searchIncomeExpense;
-    IncomeExpenseHead incomeExpenseHead;
+    //ArrayList<IncomeExpenseHead>searchIncomeExpense;
+    //IncomeExpenseHead incomeExpenseHead;
 
     public AccountHeadListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<IncomeExpenseHead> incomeExpenseHeadslist) {
         super(context, R.layout.accountheadlistview, incomeExpenseHeadslist);
@@ -43,7 +43,7 @@ public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> impl
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
-        incomeExpenseHead = getItem(position);
+        IncomeExpenseHead incomeExpenseHead = getItem(position);
         ViewHolder viewHolder;
         final View result;
         if(convertView==null){

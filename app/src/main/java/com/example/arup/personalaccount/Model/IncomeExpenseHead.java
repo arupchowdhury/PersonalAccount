@@ -8,6 +8,11 @@ public class IncomeExpenseHead {
     public IncomeExpenseHead() {
     }
 
+    public IncomeExpenseHead(int headId, String headName) {
+        this.headId = headId;
+        this.headName = headName;
+    }
+
     public IncomeExpenseHead(int headId, String headName, int headType) {
         this.headId = headId;
         this.headName = headName;
