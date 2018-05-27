@@ -22,6 +22,7 @@ public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> impl
 
     public AccountHeadListAdapter(@NonNull Context context, int resource, @NonNull List<IncomeExpenseHead> objects) {
         super(context, R.layout.accountheadlistview, objects);
+        //comment
     }
 
 
