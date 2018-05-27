@@ -30,5 +30,21 @@
         android:layout_alignTop="@+id/searchAccHead"
         android:text="New" />
 
+    <LinearLayout
+        android:layout_width="379dp"
+        android:layout_height="419dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="0dp"
+        android:orientation="vertical">
 
+        <ListView
+            android:id="@+id/lvAccountHead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+        </ListView>
+    </LinearLayout>
 </RelativeLayout>
