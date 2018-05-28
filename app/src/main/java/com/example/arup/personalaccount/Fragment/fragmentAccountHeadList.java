@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.arup.personalaccount.CustomListView.AccountHeadListAdapter;
+import com.example.arup.personalaccount.DBHelper.AccountHeadHelper;
 import com.example.arup.personalaccount.Model.IncomeExpenseHead;
 import com.example.arup.personalaccount.R;
 
@@ -26,6 +27,7 @@ public class fragmentAccountHeadList extends Fragment implements View.OnClickLis
     ListView listView;
     Button btnAddNew;
     private static AccountHeadListAdapter adapter;
+    private AccountHeadHelper accountHeadHelper;
     public fragmentAccountHeadList() {
         // Required empty public constructor
     }
@@ -39,7 +41,9 @@ public class fragmentAccountHeadList extends Fragment implements View.OnClickLis
         btnAddNew.setOnClickListener(this);
 
         listView=(ListView)view.findViewById(R.id.lvAccountHead);
-        dataModels= new ArrayList<>();
+        dataModels= new ArrayList<IncomeExpenseHead>();
+        accountHeadHelper = new AccountHeadHelper(getActivity());
+        dataModels = accountHeadHelper.getIncomeExpenseHeadList();
 
         dataModels.add(new IncomeExpenseHead(1,"Big Fish","Expense"));
         dataModels.add(new IncomeExpenseHead(2,"Black bengal (Mutton)","Expense"));

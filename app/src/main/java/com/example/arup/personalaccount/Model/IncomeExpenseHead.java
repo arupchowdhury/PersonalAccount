@@ -13,6 +13,11 @@ public class IncomeExpenseHead {
         this.headName = headName;
     }
 
+    public IncomeExpenseHead(String headName, String headType) {
+        this.headName = headName;
+        this.headType = headType;
+    }
+
     public IncomeExpenseHead(int headId, String headName, String headType) {
         this.headId = headId;
         this.headName = headName;

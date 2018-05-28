@@ -24,7 +24,7 @@ public class IncomeExpenseJournalHelper {
     public static final String TABLE_INCOMEEXPENSEJOURNAL="IncomeExpenseJournal";
 
     public static final String CREATE_TABLE_INCOMEEXPENSEJOURNAL=""+
-            "CREATE TABLE"+TABLE_INCOMEEXPENSEJOURNAL+"("+
+            "CREATE TABLE "+TABLE_INCOMEEXPENSEJOURNAL+"("+
             COL_TRANSID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
             COL_POSTINGDATE+" TEXT,"+
             COL_HEADID+" INTEGER,"+
