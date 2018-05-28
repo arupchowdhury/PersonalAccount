@@ -3,7 +3,7 @@ package com.example.arup.personalaccount.Model;
 public class IncomeExpenseHead {
     private int headId;
     private String headName;
-    private int headType;
+    private String headType;
 
     public IncomeExpenseHead() {
     }
@@ -13,7 +13,7 @@ public class IncomeExpenseHead {
         this.headName = headName;
     }
 
-    public IncomeExpenseHead(int headId, String headName, int headType) {
+    public IncomeExpenseHead(int headId, String headName, String headType) {
         this.headId = headId;
         this.headName = headName;
         this.headType = headType;
@@ -35,11 +35,11 @@ public class IncomeExpenseHead {
         this.headName = headName;
     }
 
-    public int getHeadType() {
+    public String getHeadType() {
         return headType;
     }
 
-    public void setHeadType(int headType) {
+    public void setHeadType(String headType) {
         this.headType = headType;
     }
 }

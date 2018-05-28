@@ -37,22 +37,24 @@ public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> impl
         return null;
     }
 
-    private int lastPosition = 0;
+    private int lastPosition =0;
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
-        IncomeExpenseHead incomeExpenseHead = getItem(position);
+        IncomeExpenseHead incomeExpenseHead = getItem(lastPosition);
         ViewHolder viewHolder;
         final View result;
         if(convertView==null){
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
+            //LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.accountheadlistview, parent, false);
 
             viewHolder.accheadId = (TextView)convertView.findViewById(R.id.tvHeadId);
             viewHolder.accHeadName=(TextView)convertView.findViewById(R.id.tvAccountHeadName);
+            viewHolder.accheadType=(TextView)convertView.findViewById(R.id.tvAccountHeadType);
             result = convertView;
             convertView.setTag(viewHolder);
         }
@@ -63,8 +65,9 @@ public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> impl
 
         lastPosition = position;
 
-        viewHolder.accheadId.setText(incomeExpenseHead.getHeadId());
+        viewHolder.accheadId.setText(Integer.toString(incomeExpenseHead.getHeadId()));
         viewHolder.accHeadName.setText(incomeExpenseHead.getHeadName());
+        viewHolder.accheadType.setText(incomeExpenseHead.getHeadType());
 
         return convertView;
     }
@@ -72,5 +75,6 @@ public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> impl
     public static class ViewHolder{
         TextView accheadId;
         TextView accHeadName;
+        TextView accheadType;
     }
 }

@@ -33,13 +33,15 @@ public class fragmentAccountHeadList extends Fragment {
         listView=(ListView)view.findViewById(R.id.lvAccountHead);
         dataModels= new ArrayList<>();
 
-        dataModels.add(new IncomeExpenseHead(1,"Big Fish"));
-        dataModels.add(new IncomeExpenseHead(2,"Black bengal (Mutton)"));
-        dataModels.add(new IncomeExpenseHead(3,"Soyabin oil"));
-        dataModels.add(new IncomeExpenseHead(4,"Nazir shai rice"));
-        dataModels.add(new IncomeExpenseHead(4,"Vegitables"));
+        dataModels.add(new IncomeExpenseHead(1,"Big Fish","Expense"));
+        dataModels.add(new IncomeExpenseHead(2,"Black bengal (Mutton)","Expense"));
+        dataModels.add(new IncomeExpenseHead(3,"Soyabin oil","Expense"));
+        dataModels.add(new IncomeExpenseHead(4,"Nazir shai rice","Expense"));
+        dataModels.add(new IncomeExpenseHead(5,"Vegitables","Expense"));
+        dataModels.add(new IncomeExpenseHead(6,"Bashmoti rice","Expense"));
+        dataModels.add(new IncomeExpenseHead(7,"Mug dal","Expense"));
 
-        adapter = new AccountHeadListAdapter(getContext(),R.layout.accountheadlistview,dataModels);
+        adapter = new AccountHeadListAdapter(getActivity(),R.layout.accountheadlistview,dataModels);
         listView.setAdapter(adapter);
 
         return view;
