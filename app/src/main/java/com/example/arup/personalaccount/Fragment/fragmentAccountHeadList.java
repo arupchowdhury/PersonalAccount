@@ -3,9 +3,12 @@ package com.example.arup.personalaccount.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.arup.personalaccount.CustomListView.AccountHeadListAdapter;
@@ -17,10 +20,11 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class fragmentAccountHeadList extends Fragment {
+public class fragmentAccountHeadList extends Fragment implements View.OnClickListener {
 
     ArrayList<IncomeExpenseHead> dataModels;
     ListView listView;
+    Button btnAddNew;
     private static AccountHeadListAdapter adapter;
     public fragmentAccountHeadList() {
         // Required empty public constructor
@@ -30,6 +34,10 @@ public class fragmentAccountHeadList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_account_head_list, container, false);
+
+        btnAddNew = (Button)view.findViewById(R.id.btnAddNew);
+        btnAddNew.setOnClickListener(this);
+
         listView=(ListView)view.findViewById(R.id.lvAccountHead);
         dataModels= new ArrayList<>();
 
@@ -47,4 +55,16 @@ public class fragmentAccountHeadList extends Fragment {
         return view;
     }
 
+    @Override
+    public void onClick(View v) {
+        try{
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frmMainContainer,new fragmentAccountHead());
+            fragmentTransaction.commit();
+        }
+        catch (Exception ex){
+            ex.getStackTrace();
+        }
+    }
 }
