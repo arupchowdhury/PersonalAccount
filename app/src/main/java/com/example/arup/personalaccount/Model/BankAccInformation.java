@@ -5,6 +5,7 @@ public class BankAccInformation {
     private int bankId;
     private String accName;
     private String branchName;
+    private String bankName;
 
     public BankAccInformation() {
     }
@@ -20,6 +21,14 @@ public class BankAccInformation {
         this.bankId = bankId;
         this.accName = accName;
         this.branchName = branchName;
+    }
+
+    public BankAccInformation(int accId, int bankId, String accName, String branchName, String bankName) {
+        this.accId = accId;
+        this.bankId = bankId;
+        this.accName = accName;
+        this.branchName = branchName;
+        this.bankName = bankName;
     }
 
     public int getAccId() {
@@ -52,5 +61,13 @@ public class BankAccInformation {
 
     public void setBranchName(String branchName) {
         this.branchName = branchName;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
     }
 }

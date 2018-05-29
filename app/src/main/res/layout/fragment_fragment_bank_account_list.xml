@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    tools:context=".FragmentList.fragmentBankAccountList">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bank Information"
+        android:textSize="20dp"
+        />
+
+    <SearchView
+        android:id="@+id/searchAccHead"
+        android:layout_width="290dp"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="37dp" />
+
+    <Button
+        android:id="@+id/btnAddNewBank"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/searchAccHead"
+        android:text="New" />
+    <LinearLayout
+        android:layout_marginTop="80dp"
+        android:id="@+id/lvBankNameCaption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ccc"
+        >
+        <TextView
+            android:id="@+id/tvBankId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Bank Id"
+            android:visibility="invisible"
+            />
+        <TextView
+            android:id="@+id/tvBankName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Bank Name"
+            />
+    </LinearLayout>
+    <ListView
+        android:layout_marginTop="100dp"
+        android:id="@+id/lvBankList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+
+</RelativeLayout>
