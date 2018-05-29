@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.arup.personalaccount.FragmentList.fragmentAccountHeadList;
 import com.example.arup.personalaccount.Fragment.fragmentDashboard;
+import com.example.arup.personalaccount.FragmentList.fragmentBankList;
 import com.example.arup.personalaccount.FragmentList.fragmentExpenseList;
 import com.example.arup.personalaccount.Fragment.fragmentPaymentMethod;
 
@@ -45,12 +46,12 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.frmMainContainer,new fragmentAccountHeadList());
             fragmentTransaction.commit();
         }
-        else if(item.getItemId()==R.id.itmPaymentMethod){
-            Toast.makeText(this,""+R.id.itmPaymentMethod,Toast.LENGTH_LONG).show();
+        else if(item.getItemId()==R.id.itmBankInfo){
+            Toast.makeText(this,""+R.id.itmBankInfo,Toast.LENGTH_LONG).show();
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frmMainContainer,new fragmentPaymentMethod());
+            fragmentTransaction.replace(R.id.frmMainContainer,new fragmentBankList());
             fragmentTransaction.commit();
         }
         else if(item.getItemId()==R.id.itmPaymentStatus){

@@ -29,6 +29,7 @@ public class AccountHeadHelper {
     SQLiteDatabase database;
 
     public AccountHeadHelper(Context context) {
+
         databaseHelper = new DatabaseHelper(context);
     }
 

@@ -5,8 +5,8 @@
         android:icon="@mipmap/ic_launcher_round"
         android:title="Income Expense Head"
         />
-    <item android:id="@+id/itmPaymentMethod"
-        android:title="Payment Method" />
+    <item android:id="@+id/itmBankInfo"
+        android:title="Bank Name" />
     <item android:id="@+id/itmPaymentStatus"
         android:title="Payment Status" />
 
