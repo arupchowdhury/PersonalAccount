@@ -1,4 +1,4 @@
-package com.example.arup.personalaccount.Fragment;
+package com.example.arup.personalaccount.FragmentList;
 
 
 import android.os.Bundle;

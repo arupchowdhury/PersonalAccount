@@ -10,11 +10,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.arup.personalaccount.Fragment.fragmentAccountHead;
-import com.example.arup.personalaccount.Fragment.fragmentAccountHeadList;
+import com.example.arup.personalaccount.FragmentList.fragmentAccountHeadList;
 import com.example.arup.personalaccount.Fragment.fragmentDashboard;
-import com.example.arup.personalaccount.Fragment.fragmentExpenseList;
-import com.example.arup.personalaccount.Fragment.fragmentExpenseTrans;
+import com.example.arup.personalaccount.FragmentList.fragmentExpenseList;
 import com.example.arup.personalaccount.Fragment.fragmentPaymentMethod;
 
 public class MainActivity extends AppCompatActivity {

@@ -115,4 +115,28 @@ public class AccountHeadHelper {
         }
 
     }
+
+    public IncomeExpenseHead getIncomeExpenseHeadByName(String name){
+        try{
+            database = databaseHelper.getReadableDatabase();
+            Cursor cursor = database.query(TABLE_ACCOUNTHEAD,null,COL_HEADNAME+"=?",new String[]{String.valueOf(name)},null,null,null);
+            IncomeExpenseHead incomeExpenseHead=null;
+            if(cursor.moveToFirst()){
+                do {
+                    int accHeadId = cursor.getInt(cursor.getColumnIndex(COL_HEADID));
+                    String accHeadName = cursor.getString(cursor.getColumnIndex(COL_HEADNAME));
+                    String accHeadType = cursor.getString(cursor.getColumnIndex(COL_HEADTYPE));
+                    incomeExpenseHead = new IncomeExpenseHead(accHeadId,accHeadName,accHeadType);
+
+                }while (cursor.moveToNext());
+
+            }
+            cursor.close();
+            return incomeExpenseHead;
+        }
+        catch (Exception ex){
+            throw ex;
+        }
+
+    }
 }
