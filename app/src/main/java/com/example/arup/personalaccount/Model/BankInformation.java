@@ -7,6 +7,10 @@ public class BankInformation {
     public BankInformation() {
     }
 
+    public BankInformation(String bankName) {
+        this.bankName = bankName;
+    }
+
     public BankInformation(int bankId, String bankName) {
         this.bankId = bankId;
         this.bankName = bankName;

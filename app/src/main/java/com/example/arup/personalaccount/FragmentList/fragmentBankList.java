@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.arup.personalaccount.CustomListView.BankListAdapter;
+import com.example.arup.personalaccount.DBHelper.BankInfoHelper;
 import com.example.arup.personalaccount.Fragment.fragmentAccountHead;
 import com.example.arup.personalaccount.Fragment.fragmentBankInfo;
 import com.example.arup.personalaccount.Model.BankInformation;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 public class fragmentBankList extends Fragment implements View.OnClickListener {
 
     ArrayList<BankInformation> dataModels;
+    BankInfoHelper bankInfoHelper;
     ListView listView;
     Button btnAddNewBank;
     private static BankListAdapter adapter;
@@ -41,7 +43,9 @@ public class fragmentBankList extends Fragment implements View.OnClickListener {
         btnAddNewBank = (Button)view.findViewById(R.id.btnAddNewBank);
 
         listView=(ListView)view.findViewById(R.id.lvBankList);
+        bankInfoHelper = new BankInfoHelper(getActivity());
         dataModels= new ArrayList<BankInformation>();
+        dataModels = bankInfoHelper.getBankList();
 
         dataModels.add(new BankInformation(1,"Janata Bank"));
         dataModels.add(new BankInformation(2,"Agroni Bank"));
