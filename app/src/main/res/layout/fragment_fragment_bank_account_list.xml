@@ -15,7 +15,7 @@
         />
 
     <SearchView
-        android:id="@+id/searchAccHead"
+        android:id="@+id/searchBankAcc"
         android:layout_width="290dp"
         android:layout_height="38dp"
         android:layout_alignParentStart="true"
@@ -23,11 +23,11 @@
         android:layout_marginTop="37dp" />
 
     <Button
-        android:id="@+id/btnAddNewBank"
+        android:id="@+id/btnAddNewBankAcc"
         android:layout_width="wrap_content"
         android:layout_height="38dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/searchAccHead"
+        android:layout_alignTop="@+id/searchBankAcc"
         android:text="New" />
     <LinearLayout
         android:layout_marginTop="80dp"
@@ -36,6 +36,21 @@
         android:layout_height="wrap_content"
         android:background="#ccc"
         >
+        <TextView
+            android:id="@+id/tvBankAccId"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:text="Bank Acc Id"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:id="@+id/tvBankAccName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account Name"
+            android:visibility="visible"
+            />
         <TextView
             android:id="@+id/tvBankId"
             android:layout_width="wrap_content"
@@ -51,10 +66,17 @@
             android:layout_weight="3"
             android:text="Bank Name"
             />
+        <TextView
+            android:id="@+id/tvBranchName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Bank Name"
+            />
     </LinearLayout>
     <ListView
         android:layout_marginTop="100dp"
-        android:id="@+id/lvBankList"
+        android:id="@+id/lvBankAccList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
