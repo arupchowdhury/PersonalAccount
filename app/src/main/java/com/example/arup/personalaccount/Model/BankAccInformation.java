@@ -16,6 +16,12 @@ public class BankAccInformation {
         this.accName = accName;
     }
 
+    public BankAccInformation(int bankId, String accName, String branchName) {
+        this.bankId = bankId;
+        this.accName = accName;
+        this.branchName = branchName;
+    }
+
     public BankAccInformation(int accId, int bankId, String accName, String branchName) {
         this.accId = accId;
         this.bankId = bankId;
