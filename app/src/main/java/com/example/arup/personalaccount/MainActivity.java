@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.arup.personalaccount.Fragment.fragmentBankAcc;
 import com.example.arup.personalaccount.FragmentList.fragmentAccountHeadList;
 import com.example.arup.personalaccount.Fragment.fragmentDashboard;
 import com.example.arup.personalaccount.FragmentList.fragmentBankAccountList;
@@ -21,6 +22,8 @@ import com.example.arup.personalaccount.Fragment.fragmentPaymentMethod;
 public class MainActivity extends AppCompatActivity {
     //    FragmentManager fragmentManager;
 //    FragmentTransaction fragmentTransaction;
+
+    String fname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,11 +32,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frmMainContainer, new fragmentDashboard());
         fragmentTransaction.commit();
-
-
-//        if(fragment == "fragmentBankAcc"){
-//
-//        }
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
     }
 
     @Override
@@ -51,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frmMainContainer, new fragmentAccountHeadList());
             fragmentTransaction.commit();
-
-
-//            if(getSupportActionBar()!=null){
-//                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//                getSupportActionBar().setDisplayShowHomeEnabled(true);
-//            }
         } else if (item.getItemId() == R.id.itmBankInfo) {
             Toast.makeText(this, "" + R.id.itmBankInfo, Toast.LENGTH_LONG).show();
 
@@ -87,6 +83,18 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.itmIncomeExpenseLedger) {
             Toast.makeText(this, "" + R.id.itmIncomeExpenseLedger, Toast.LENGTH_LONG).show();
         }
+        else if(item.getItemId()==android.R.id.home){
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.frmMainContainer, new fragmentDashboard());
+//            fragmentTransaction.commit();
+            if(fname.equals("fragmentBankAcc")){
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frmMainContainer, new fragmentBankAccountList());
+                fragmentTransaction.commit();
+            }
+        }
         return true;
     }
 
@@ -96,8 +104,15 @@ public class MainActivity extends AppCompatActivity {
         android.app.Fragment fragment1 = this.getFragmentManager().findFragmentById(R.id.frmMainContainer);
         //Toast.makeText(this, "" + fragment + "----" + fragment1, Toast.LENGTH_LONG).show();
         //str = str.replaceAll("\\(.*?\\) ?", "");
-        String fname = fragment.toString().replaceAll("\\(.*?\\) ?", "");
-        Toast.makeText(this, "" + fname, Toast.LENGTH_LONG).show();
+        fname = fragment.toString().replaceAll("\\{.*?\\} ?", "").trim();
+
+        if(!fname.equals("fragmentDashboard")){
+            if(getSupportActionBar()!=null){
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
+                Toast.makeText(this, "" + fname, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 }
