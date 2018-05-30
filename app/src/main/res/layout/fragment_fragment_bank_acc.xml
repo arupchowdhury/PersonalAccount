@@ -5,6 +5,13 @@
     android:layout_height="match_parent"
     android:padding="5dp"
     tools:context=".Fragment.fragmentBankAcc">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toobarAcc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@android:dimen/app_icon_size"
+        android:theme="@style/AlertDialog.AppCompat.Light"
+        />
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

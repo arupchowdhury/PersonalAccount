@@ -67,6 +67,11 @@ public class fragmentAccountHeadList extends Fragment implements View.OnClickLis
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frmMainContainer,new fragmentAccountHead());
             fragmentTransaction.commit();
+
+//            if(getSupportActionBar()!=null){
+////                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+////                getSupportActionBar().setDisplayShowHomeEnabled(true);
+////            }
         }
         catch (Exception ex){
             ex.getStackTrace();

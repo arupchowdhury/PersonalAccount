@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.arup.personalaccount.DBHelper.BankAccInfoHelper;
 import com.example.arup.personalaccount.DBHelper.BankInfoHelper;
@@ -46,6 +47,9 @@ public class fragmentBankAcc extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_bank_acc, container, false);
+//        Toolbar toolbar = view.findViewById(R.id.toobarAcc);
+//        toolbar.setNavigationIcon(R.drawable.ic_launcher_background);
+
 
         etBankAccId = view.findViewById(R.id.etBankAccIdAcc);
         etAccName = view.findViewById(R.id.etAccNameAcc);
