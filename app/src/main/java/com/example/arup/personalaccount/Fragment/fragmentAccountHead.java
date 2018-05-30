@@ -48,6 +48,11 @@ public class fragmentAccountHead extends Fragment implements View.OnClickListene
         btnSaveAccHead = view.findViewById(R.id.btnSaveAcchead);
         btnDeleteAccHead = view.findViewById(R.id.btnDeleteAccHead);
         spinHeadTypeAdapter();
+        if(getArguments()!=null){
+            String strtext = getArguments().getString("accheadId");
+            Toast.makeText(getActivity(),""+strtext,Toast.LENGTH_LONG).show();
+//        loadAllContent(strtext);
+        }
 
 
         btnSaveAccHead.setOnClickListener(this);
@@ -62,6 +67,13 @@ public class fragmentAccountHead extends Fragment implements View.OnClickListene
         spHeadType.setAdapter(headTypeAdapter);
     }
 
+    private void loadAllContent(String id){
+        AccountHeadHelper accountHeadHelper = new AccountHeadHelper(getActivity());
+        IncomeExpenseHead incomeExpenseHead = accountHeadHelper.getIncomeExpenseHead(Integer.parseInt(id));
+        etHeadName.setText(incomeExpenseHead.getHeadName());
+        Toast.makeText(getActivity(),""+incomeExpenseHead.getHeadName(),Toast.LENGTH_LONG).show();
+        //spHeadType.setAdapter();
+    }
 
     @Override
     public void onClick(View v) {

@@ -97,7 +97,7 @@ public class AccountHeadHelper {
         try{
             database = databaseHelper.getReadableDatabase();
             Cursor cursor = database.query(TABLE_ACCOUNTHEAD,null,COL_HEADID+"=?",new String[]{String.valueOf(id)},null,null,null);
-            IncomeExpenseHead incomeExpenseHead=null;
+            IncomeExpenseHead incomeExpenseHead=new IncomeExpenseHead();
             if(cursor.moveToFirst()){
                 do {
                     int accHeadId = cursor.getInt(cursor.getColumnIndex(COL_HEADID));

@@ -20,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/etHeadId" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="52dp" />
 
     <EditText
         android:id="@+id/etHeadId"
@@ -28,11 +29,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="49dp"
+        android:layout_marginTop="162dp"
         android:ems="10"
         android:hint="Income Expense id"
         android:inputType="textPersonName"
-        android:text="" />
+        android:text=""
+        android:visibility="invisible" />
 
     <EditText
         android:id="@+id/etHeadName"
@@ -40,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="134dp"
+        android:layout_marginTop="98dp"
         android:ems="10"
         android:hint="Income Expense Head Name"
         android:inputType="textPersonName"

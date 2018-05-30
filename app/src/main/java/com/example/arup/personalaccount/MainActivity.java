@@ -1,6 +1,7 @@
 package com.example.arup.personalaccount;
 
 //import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.arup.personalaccount.Fragment.fragmentAccountHead;
 import com.example.arup.personalaccount.Fragment.fragmentBankAcc;
 import com.example.arup.personalaccount.FragmentList.fragmentAccountHeadList;
 import com.example.arup.personalaccount.Fragment.fragmentDashboard;
@@ -28,14 +30,35 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frmMainContainer, new fragmentDashboard());
-        fragmentTransaction.commit();
-        if(getSupportActionBar()!=null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            getSupportActionBar().setDisplayShowHomeEnabled(false);
+
+        String fragment = getIntent().getStringExtra("fragment");
+        String parm = getIntent().getStringExtra("accheadId");
+        Toast.makeText(this, "" + fragment+": "+parm, Toast.LENGTH_LONG).show();
+        if(fragment!=null){
+            if(fragment.equals("fragmentAccountHead")){
+                Bundle bundle = new Bundle();
+                bundle.putString("accheadId",parm);
+                fragmentAccountHead fragmentAccountHead = new fragmentAccountHead();
+                fragmentAccountHead.setArguments(bundle);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frmMainContainer, fragmentAccountHead);
+                fragmentTransaction.commit();
+            }
         }
+
+
+        else {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frmMainContainer, new fragmentDashboard());
+            fragmentTransaction.commit();
+            if(getSupportActionBar()!=null){
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                getSupportActionBar().setDisplayShowHomeEnabled(false);
+            }
+        }
+
     }
 
     @Override
@@ -89,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
 //            fragmentTransaction.replace(R.id.frmMainContainer, new fragmentDashboard());
 //            fragmentTransaction.commit();
             if(fname.equals("fragmentBankAcc")){
+
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frmMainContainer, new fragmentBankAccountList());

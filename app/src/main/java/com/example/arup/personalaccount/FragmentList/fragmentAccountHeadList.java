@@ -63,7 +63,8 @@ public class fragmentAccountHeadList extends Fragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         try{
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager=getFragmentManager();
+            //FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frmMainContainer,new fragmentAccountHead());
             fragmentTransaction.commit();

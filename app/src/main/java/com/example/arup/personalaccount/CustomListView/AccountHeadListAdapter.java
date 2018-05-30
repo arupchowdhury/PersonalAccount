@@ -1,8 +1,15 @@
 package com.example.arup.personalaccount.CustomListView;
 
+//import android.app.FragmentManager;
+//import android.app.Activity;
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +17,24 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.widget.Toast;
 
+import com.example.arup.personalaccount.Fragment.fragmentAccountHead;
+import com.example.arup.personalaccount.MainActivity;
 import com.example.arup.personalaccount.Model.IncomeExpenseHead;
 import com.example.arup.personalaccount.R;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 
-public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> implements Filterable {
+public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> implements Filterable, View.OnClickListener {
     Context context;
+//    android.app.Fragment fragment;
     ArrayList<IncomeExpenseHead> incomeExpenseHeadslist;
     //ArrayList<IncomeExpenseHead>searchIncomeExpense;
     //IncomeExpenseHead incomeExpenseHead;
@@ -28,6 +42,7 @@ public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> impl
     public AccountHeadListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<IncomeExpenseHead> incomeExpenseHeadslist) {
         super(context, R.layout.accountheadlistview, incomeExpenseHeadslist);
         this.context=context;
+//        this.fragment=fragment;
         this.incomeExpenseHeadslist=incomeExpenseHeadslist;
     }
 
@@ -38,13 +53,13 @@ public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> impl
     }
 
     private int lastPosition =0;
+    ViewHolder viewHolder;
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
-        IncomeExpenseHead incomeExpenseHead = getItem(lastPosition);
-        ViewHolder viewHolder;
+        IncomeExpenseHead incomeExpenseHead = getItem(position);
         final View result;
         if(convertView==null){
             viewHolder = new ViewHolder();
@@ -63,14 +78,49 @@ public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> impl
             result=convertView;
         }
 
-        lastPosition = position;
+        //lastPosition = position;
 
         viewHolder.accheadId.setText(Integer.toString(incomeExpenseHead.getHeadId()));
         viewHolder.accHeadName.setText(incomeExpenseHead.getHeadName());
         viewHolder.accheadType.setText(incomeExpenseHead.getHeadType());
 
+        viewHolder.accHeadName.setOnClickListener(this);
+        viewHolder.accheadType.setOnClickListener(this);
+
         return convertView;
     }
+
+    @Override
+    public void onClick(View v) {
+
+        if(v==viewHolder.accHeadName){
+            dialogveent();
+        }
+        else if(v==viewHolder.accheadType){
+            dialogveent();
+        }
+    }
+
+    public void dialogveent(){
+        CharSequence events[] = new CharSequence[] {"Edit", "Delete"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Action");
+
+        final AlertDialog.Builder builderdialog = builder.setItems(events, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which==0 || which==1){
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra("fragment","fragmentAccountHead");
+                    intent.putExtra("accheadId",viewHolder.accheadId.getText().toString());
+                    startActivity(getContext(),intent,null);
+                }
+            }
+        });
+        builderdialog.show();
+    }
+
+
 
     public static class ViewHolder{
         TextView accheadId;
