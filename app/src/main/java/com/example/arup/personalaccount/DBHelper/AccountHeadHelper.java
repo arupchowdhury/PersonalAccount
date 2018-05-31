@@ -68,6 +68,22 @@ public class AccountHeadHelper {
         }
     }
 
+
+    public long deleteContactInfo(int id){
+        try{
+            database = databaseHelper.getWritableDatabase();
+            long _id = database.delete(TABLE_ACCOUNTHEAD,
+                    ""+COL_HEADID+"=?",new String[]{String.valueOf(id)});
+            database.close();
+            return _id;
+        }
+        catch (Exception ex){
+            throw ex;
+        }
+
+    }
+
+
     public ArrayList<IncomeExpenseHead> getIncomeExpenseHeadList(){
         try{
             database = databaseHelper.getReadableDatabase();
