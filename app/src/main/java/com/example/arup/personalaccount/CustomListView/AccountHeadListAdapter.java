@@ -32,11 +32,11 @@ import java.util.ArrayList;
 import static android.support.v4.content.ContextCompat.startActivity;
 
 
-public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> implements Filterable, View.OnClickListener {
+public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> implements Filterable {
     Context context;
 //    android.app.Fragment fragment;
     ArrayList<IncomeExpenseHead> incomeExpenseHeadslist;
-    //ArrayList<IncomeExpenseHead>searchIncomeExpense;
+    ArrayList<IncomeExpenseHead>searchList;
     //IncomeExpenseHead incomeExpenseHead;
 
     public AccountHeadListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<IncomeExpenseHead> incomeExpenseHeadslist) {
@@ -49,11 +49,53 @@ public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> impl
 
     @Override
     public Filter getFilter() {
-        return null;
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                final FilterResults oReturn = new FilterResults();
+                final ArrayList<IncomeExpenseHead> result = new ArrayList<IncomeExpenseHead>();
+
+                if(searchList==null)
+                    searchList = incomeExpenseHeadslist;
+
+                if(charSequence!=null){
+                    if(searchList!=null && searchList.size()>0){
+                        for(IncomeExpenseHead incomeExpenseHead:searchList){
+                            if(incomeExpenseHead.getHeadName().toLowerCase().contains(charSequence.toString().toLowerCase())){
+                                result.add(incomeExpenseHead);
+                            }
+                        }
+                        oReturn.count = result.size();
+                        oReturn.values=result;
+
+                    }
+                }
+                return oReturn;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                incomeExpenseHeadslist = (ArrayList<IncomeExpenseHead>)results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+    @Override
+    public int getCount() {
+        return incomeExpenseHeadslist.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
     private int lastPosition =0;
-    ViewHolder viewHolder;
+
 
     @NonNull
     @Override
@@ -61,6 +103,7 @@ public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> impl
         // Get the data item for this position
         IncomeExpenseHead incomeExpenseHead = getItem(position);
         final View result;
+        final ViewHolder viewHolder;
         if(convertView==null){
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -77,51 +120,57 @@ public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> impl
             viewHolder = (ViewHolder) convertView.getTag();
             result=convertView;
         }
-
         //lastPosition = position;
 
         viewHolder.accheadId.setText(Integer.toString(incomeExpenseHead.getHeadId()));
         viewHolder.accHeadName.setText(incomeExpenseHead.getHeadName());
         viewHolder.accheadType.setText(incomeExpenseHead.getHeadType());
 
-        viewHolder.accHeadName.setOnClickListener(this);
-        viewHolder.accheadType.setOnClickListener(this);
+        viewHolder.accHeadName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CharSequence events[] = new CharSequence[] {"Edit", "Delete"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Action");
+
+                final AlertDialog.Builder builderdialog = builder.setItems(events, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(which==0 || which==1){
+                            Intent intent = new Intent(context, MainActivity.class);
+                            intent.putExtra("fragment","fragmentAccountHead");
+                            intent.putExtra("id",viewHolder.accheadId.getText().toString());
+                            startActivity(getContext(),intent,null);
+                        }
+                    }
+                });
+                builderdialog.show();
+            }
+        });
+       viewHolder.accheadType.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               CharSequence events[] = new CharSequence[] {"Edit", "Delete"};
+               AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+               builder.setTitle("Action");
+
+               final AlertDialog.Builder builderdialog = builder.setItems(events, new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialog, int which) {
+                       if(which==0 || which==1){
+                           Intent intent = new Intent(context, MainActivity.class);
+                           intent.putExtra("fragment","fragmentAccountHead");
+                           intent.putExtra("accheadId",viewHolder.accheadId.getText().toString());
+                           startActivity(getContext(),intent,null);
+                       }
+                   }
+               });
+               builderdialog.show();
+           }
+       });
 
         return convertView;
     }
-
-    @Override
-    public void onClick(View v) {
-
-        if(v==viewHolder.accHeadName){
-            dialogveent();
-        }
-        else if(v==viewHolder.accheadType){
-            dialogveent();
-        }
-    }
-
-    public void dialogveent(){
-        CharSequence events[] = new CharSequence[] {"Edit", "Delete"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Action");
-
-        final AlertDialog.Builder builderdialog = builder.setItems(events, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if(which==0 || which==1){
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra("fragment","fragmentAccountHead");
-                    intent.putExtra("accheadId",viewHolder.accheadId.getText().toString());
-                    startActivity(getContext(),intent,null);
-                }
-            }
-        });
-        builderdialog.show();
-    }
-
-
-
     public static class ViewHolder{
         TextView accheadId;
         TextView accHeadName;

@@ -7,28 +7,31 @@
     tools:context=".FragmentList.fragmentAccountHeadList">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+    <LinearLayout
         android:layout_width="match_parent"
+        android:orientation="horizontal"
         android:layout_height="wrap_content"
-        android:text="Income Expense Head List"
-        android:textSize="20dp"
-        />
+        android:padding="10dp"
+        >
+        <SearchView
+            android:id="@+id/searchAccHead"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:background="#fcf9f9" />
 
-    <SearchView
-        android:id="@+id/searchAccHead"
-        android:layout_width="290dp"
-        android:layout_height="38dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="37dp" />
+        <Button
+            android:id="@+id/btnAddNew"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textSize="20dp"
+            android:text="New" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btnAddNew"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/searchAccHead"
-        android:text="New" />
+
     <LinearLayout
         android:layout_marginTop="80dp"
         android:id="@+id/lvAccountHeadCaption"
@@ -38,9 +41,8 @@
         >
         <TextView
             android:id="@+id/tvHeadId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
+            android:layout_width="1dp"
+            android:layout_height="1dp"
             android:text="Head Id"
             android:visibility="invisible"
             />
@@ -61,10 +63,17 @@
             />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <ListView
-            android:layout_marginTop="100dp"
             android:id="@+id/lvAccountHead"
+            android:layout_marginTop="100dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+
         </ListView>
+    </LinearLayout>
+
 </RelativeLayout>

@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         String fragment = getIntent().getStringExtra("fragment");
-        String parm = getIntent().getStringExtra("accheadId");
-        Toast.makeText(this, "" + fragment+": "+parm, Toast.LENGTH_LONG).show();
+        String parm = getIntent().getStringExtra("id");
+//        Toast.makeText(this, "" + fragment+": "+parm, Toast.LENGTH_LONG).show();
         if(fragment!=null){
             if(fragment.equals("fragmentAccountHead")){
                 Bundle bundle = new Bundle();
@@ -71,20 +71,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.itmAccountHead) {
-            Toast.makeText(this, "" + R.id.itmAccountHead, Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "" + R.id.itmAccountHead, Toast.LENGTH_LONG).show();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frmMainContainer, new fragmentAccountHeadList());
             fragmentTransaction.commit();
         } else if (item.getItemId() == R.id.itmBankInfo) {
-            Toast.makeText(this, "" + R.id.itmBankInfo, Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "" + R.id.itmBankInfo, Toast.LENGTH_LONG).show();
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frmMainContainer, new fragmentBankList());
             fragmentTransaction.commit();
         } else if (item.getItemId() == R.id.itmBankAcc) {
-            Toast.makeText(this, "" + R.id.itmBankAcc, Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "" + R.id.itmBankAcc, Toast.LENGTH_LONG).show();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frmMainContainer, new fragmentBankAccountList());
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.itmIncome) {
             Toast.makeText(this, "" + R.id.itmIncome, Toast.LENGTH_LONG).show();
         } else if (item.getItemId() == R.id.itmExpense) {
-            Toast.makeText(this, "" + R.id.itmExpense, Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "" + R.id.itmExpense, Toast.LENGTH_LONG).show();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frmMainContainer, new fragmentExpenseList());
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             if(getSupportActionBar()!=null){
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowHomeEnabled(true);
-                Toast.makeText(this, "" + fname, Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "" + fname, Toast.LENGTH_LONG).show();
             }
         }
     }

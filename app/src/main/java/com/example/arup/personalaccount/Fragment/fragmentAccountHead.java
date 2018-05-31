@@ -16,6 +16,7 @@ import com.example.arup.personalaccount.DBHelper.AccountHeadHelper;
 import com.example.arup.personalaccount.Model.IncomeExpenseHead;
 import com.example.arup.personalaccount.R;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -51,7 +52,7 @@ public class fragmentAccountHead extends Fragment implements View.OnClickListene
         if(getArguments()!=null){
             String strtext = getArguments().getString("accheadId");
             Toast.makeText(getActivity(),""+strtext,Toast.LENGTH_LONG).show();
-//        loadAllContent(strtext);
+            loadAllContent(strtext);
         }
 
 
@@ -70,9 +71,11 @@ public class fragmentAccountHead extends Fragment implements View.OnClickListene
     private void loadAllContent(String id){
         AccountHeadHelper accountHeadHelper = new AccountHeadHelper(getActivity());
         IncomeExpenseHead incomeExpenseHead = accountHeadHelper.getIncomeExpenseHead(Integer.parseInt(id));
+        etHeadId.setText(Integer.toString(incomeExpenseHead.getHeadId()));
         etHeadName.setText(incomeExpenseHead.getHeadName());
         Toast.makeText(getActivity(),""+incomeExpenseHead.getHeadName(),Toast.LENGTH_LONG).show();
-        //spHeadType.setAdapter();
+        int index = Arrays.asList(headtypelist).indexOf(incomeExpenseHead.getHeadType());
+        spHeadType.setSelection(index);
     }
 
     @Override
