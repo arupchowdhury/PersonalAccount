@@ -160,7 +160,7 @@ public class AccountHeadListAdapter extends ArrayAdapter<IncomeExpenseHead> impl
                        if(which==0 || which==1){
                            Intent intent = new Intent(context, MainActivity.class);
                            intent.putExtra("fragment","fragmentAccountHead");
-                           intent.putExtra("accheadId",viewHolder.accheadId.getText().toString());
+                           intent.putExtra("id",viewHolder.accheadId.getText().toString());
                            startActivity(getContext(),intent,null);
                        }
                    }
