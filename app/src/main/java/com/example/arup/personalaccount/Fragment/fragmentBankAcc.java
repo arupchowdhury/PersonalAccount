@@ -113,13 +113,12 @@ public class fragmentBankAcc extends Fragment implements View.OnClickListener{
         spinBAnkId.setSelection(getIndex(bankInformationArrayAdapter,Integer.toString(index)));
 
     }
-
     @Override
     public void onClick(View v) {
         try{
             if(v==btnSaveAcc){
 
-                if(etAccName.getText().toString().equals("")|| etBankAccId.getText().toString().equals(""))
+                if(etAccName.getText().toString().equals(""))
                     return;
                 bankAccInfoHelper = new BankAccInfoHelper(getActivity());
 

@@ -47,4 +47,20 @@ public class IncomeExpenseHead {
     public void setHeadType(String headType) {
         this.headType = headType;
     }
+
+
+    @Override
+    public String toString() {
+        return headName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof BankInformation){
+            BankInformation c = (BankInformation )obj;
+            if(c.getBankName().equals(headName) && c.getBankId()==headId ) return true;
+        }
+
+        return false;
+    }
 }

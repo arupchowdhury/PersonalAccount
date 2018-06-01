@@ -109,6 +109,33 @@ public class AccountHeadHelper {
         }
     }
 
+    public ArrayList<IncomeExpenseHead> getcboIncomeExpenseHeadList(String type){
+        try{
+            String queryjoin = "SELECT "+COL_HEADID+","+COL_HEADNAME+" FROM accounthead  WHERE "+COL_HEADTYPE+"='"+type+"'";
+            database = databaseHelper.getReadableDatabase();
+//            Cursor cursor = database.query(TABLE_ACCOUNTHEAD,null,
+//                    COL_HEADID+"=?",new String[]{type},null,null,null);
+            Cursor cursor = database.rawQuery(queryjoin,null);
+            ArrayList<IncomeExpenseHead> incomeExpenseHeadArrayList= new ArrayList<IncomeExpenseHead>();
+            incomeExpenseHeadArrayList.add(new IncomeExpenseHead(0,"--Select Expense--"));
+            if(cursor.moveToFirst()){
+                do {
+                    int accHeadId = cursor.getInt(cursor.getColumnIndex(COL_HEADID));
+                    String accHeadName = cursor.getString(cursor.getColumnIndex(COL_HEADNAME));
+                    //String accHeadType = cursor.getString(cursor.getColumnIndex(COL_HEADTYPE));
+                    IncomeExpenseHead incomeExpenseHead = new IncomeExpenseHead(accHeadId,accHeadName);
+                    incomeExpenseHeadArrayList.add(incomeExpenseHead);
+                }while (cursor.moveToNext());
+            }
+            cursor.close();
+            return incomeExpenseHeadArrayList;
+
+        }
+        catch (Exception ex){
+            throw ex;
+        }
+    }
+
     public IncomeExpenseHead getIncomeExpenseHead(int id){
         try{
             database = databaseHelper.getReadableDatabase();
@@ -156,4 +183,6 @@ public class AccountHeadHelper {
         }
 
     }
+
+    //new String[]{COL_HEADID,COL_HEADNAME}
 }

@@ -16,6 +16,11 @@ public class BankAccInformation {
         this.accName = accName;
     }
 
+    public BankAccInformation(int accId, String accName) {
+        this.accId = accId;
+        this.accName = accName;
+    }
+
     public BankAccInformation(int bankId, String accName, String branchName) {
         this.bankId = bankId;
         this.accName = accName;
@@ -75,5 +80,20 @@ public class BankAccInformation {
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
+    }
+
+    @Override
+    public String toString() {
+        return accName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof BankInformation){
+            BankInformation c = (BankInformation )obj;
+            if(c.getBankName().equals(accName) && c.getBankId()==accId ) return true;
+        }
+
+        return false;
     }
 }

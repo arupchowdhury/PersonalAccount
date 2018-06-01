@@ -102,6 +102,31 @@ public class BankInfoHelper {
         }
     }
 
+    public ArrayList<BankInformation> getcboBankList(){
+        try{
+            database = databaseHelper.getReadableDatabase();
+            Cursor cursor = database.query(TABLE_BANKINFO,null,
+                    null,null,null,null,null);
+            ArrayList<BankInformation> bankInformationArrayList= new ArrayList<BankInformation>();
+            if(cursor.moveToFirst()){
+                do {
+                    int bankId = cursor.getInt(cursor.getColumnIndex(COL_BANKID));
+                    String bankName = cursor.getString(cursor.getColumnIndex(COL_BANKNAME));
+
+                    BankInformation bankInformation = new BankInformation(bankId,bankName);
+                    bankInformationArrayList.add(bankInformation);
+                }while (cursor.moveToNext());
+            }
+            cursor.close();
+            return bankInformationArrayList;
+
+        }
+        catch (Exception ex){
+            throw ex;
+        }
+    }
+
+
     public BankInformation getBankInfo(int id){
         try{
             database = databaseHelper.getReadableDatabase();

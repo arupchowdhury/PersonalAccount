@@ -2,21 +2,23 @@ package com.example.arup.personalaccount.Model;
 
 import android.widget.DatePicker;
 
+import java.util.Date;
+
 public class IncomeExpenseJournal {
     private int transId;
-    private DatePicker postingDate;
+    private String postingDate;
     private int headId;
     private double incomeAmount;
     private double expenseAmount;
     private String accountTypeName;
-    private int paymentMethodId;
+    private String paymentMethodId;
     private String chequeNo;
-    private int paymentStatusId;
+    private String paymentStatusId;
     private String description;
     private String journalRemark;
     private String refrenceNum;
-    private DatePicker createdate;
-    private DatePicker updatedDate;
+    private String createdate;
+    private String updatedDate;
 
     private int bankName;
     private int accountName;
@@ -39,11 +41,11 @@ public class IncomeExpenseJournal {
 
 
 
-    public IncomeExpenseJournal(int transId, DatePicker postingDate, int headId,
+    public IncomeExpenseJournal(int transId, String postingDate, int headId,
                                 double incomeAmount, double expenseAmount, String accountTypeName,
-                                int paymentMethodId, String chequeNo, int paymentStatusId, String description,
-                                String journalRemark, String refrenceNum, DatePicker createdate,
-                                DatePicker updatedDate, int bankName, int accountName) {
+                                String paymentMethodId, String chequeNo, String paymentStatusId, String description,
+                                String journalRemark, String refrenceNum, String createdate,
+                                String updatedDate, int bankName, int accountName) {
         this.transId = transId;
         this.postingDate = postingDate;
         this.headId = headId;
@@ -73,11 +75,11 @@ public class IncomeExpenseJournal {
         this.transId = transId;
     }
 
-    public DatePicker getPostingDate() {
+    public String getPostingDate() {
         return postingDate;
     }
 
-    public void setPostingDate(DatePicker postingDate) {
+    public void setPostingDate(String postingDate) {
         this.postingDate = postingDate;
     }
 
@@ -113,11 +115,11 @@ public class IncomeExpenseJournal {
         this.accountTypeName = accountTypeName;
     }
 
-    public int getPaymentMethodId() {
+    public String getPaymentMethodId() {
         return paymentMethodId;
     }
 
-    public void setPaymentMethodId(int paymentMethodId) {
+    public void setPaymentMethodId(String paymentMethodId) {
         this.paymentMethodId = paymentMethodId;
     }
 
@@ -129,11 +131,11 @@ public class IncomeExpenseJournal {
         this.chequeNo = chequeNo;
     }
 
-    public int getPaymentStatusId() {
+    public String getPaymentStatusId() {
         return paymentStatusId;
     }
 
-    public void setPaymentStatusId(int paymentStatusId) {
+    public void setPaymentStatusId(String paymentStatusId) {
         this.paymentStatusId = paymentStatusId;
     }
 
@@ -161,19 +163,19 @@ public class IncomeExpenseJournal {
         this.refrenceNum = refrenceNum;
     }
 
-    public DatePicker getCreatedate() {
+    public String getCreatedate() {
         return createdate;
     }
 
-    public void setCreatedate(DatePicker createdate) {
+    public void setCreatedate(String createdate) {
         this.createdate = createdate;
     }
 
-    public DatePicker getUpdatedDate() {
+    public String getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(DatePicker updatedDate) {
+    public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
     }
 }

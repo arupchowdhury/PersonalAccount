@@ -1,6 +1,11 @@
 package com.example.arup.personalaccount.DBHelper;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.DatePicker;
+
+import com.example.arup.personalaccount.Model.IncomeExpenseJournal;
 
 public class IncomeExpenseJournalHelper {
     public static final String COL_TRANSID= "transId";
@@ -30,17 +35,56 @@ public class IncomeExpenseJournalHelper {
             COL_HEADID+" INTEGER,"+
             COL_INCOMEAMOUNT+" REAL,"+
             COL_EXPENSEAMOUNT+" REAL,"+
-            COL_ACCOUNTTYPE+" INTEGER,"+
-            COL_PAYMENTMETHODID+" INTEGER,"+
+            COL_ACCOUNTTYPE+" TEXT,"+
+            COL_PAYMENTMETHODID+" TEXT,"+
             COL_BANKNAME+" INTEGER,"+
             COL_ACCOUNTNAME+" INTEGER,"+
             COL_CHEQUENO+" TEXT,"+
-            COL_PAYMENTSTATUSID+" INTEGER,"+
+            COL_PAYMENTSTATUSID+" TEXT,"+
             COL_DESCRIPTION+" TEXT,"+
             COL_JOURNALREMARK+" TEXT,"+
             COL_REFERENCENUM+" TEXT,"+
             COL_CREATEDDATE+" TEXT,"+
             COL_UPDATEDDATE+" TEXT"+
             ")";
+
+
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase database;
+
+    public IncomeExpenseJournalHelper(Context context) {
+
+        databaseHelper = new DatabaseHelper(context);
+    }
+
+    public long insertAccountHead(IncomeExpenseJournal incomeExpenseJournal){
+        try{
+            database = databaseHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            //contentValues.put(COL_HEADID,incomeExpenseHead.getHeadId());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getPostingDate().toString());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getHeadId());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getIncomeAmount());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getExpenseAmount());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getAccountTypeName());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getPaymentMethodId());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getBankName());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getAccountName());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getChequeNo());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getPaymentStatusId());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getDescription());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getJournalRemark());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getRefrenceNum());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getCreatedate().toString());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getUpdatedDate().toString());
+            long _id = database.insert(TABLE_INCOMEEXPENSEJOURNAL,null,contentValues);
+            database.close();
+            return _id;
+        }
+        catch (Exception ex){
+            ex.getStackTrace();
+            return 0;
+        }
+    }
 
 }
