@@ -63,6 +63,20 @@ public class BankInfoHelper {
         }
     }
 
+    public long deleteBankInfo(int id){
+        try{
+            database = databaseHelper.getWritableDatabase();
+            long _id = database.delete(TABLE_BANKINFO,
+                    ""+COL_BANKID+"=?",new String[]{String.valueOf(id)});
+            database.close();
+            return _id;
+        }
+        catch (Exception ex){
+            throw ex;
+        }
+
+    }
+
     public ArrayList<BankInformation> getBankList(){
         try{
             database = databaseHelper.getReadableDatabase();

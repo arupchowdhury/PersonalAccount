@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.arup.personalaccount.Fragment.fragmentAccountHead;
 import com.example.arup.personalaccount.Fragment.fragmentBankAcc;
+import com.example.arup.personalaccount.Fragment.fragmentBankInfo;
 import com.example.arup.personalaccount.FragmentList.fragmentAccountHeadList;
 import com.example.arup.personalaccount.Fragment.fragmentDashboard;
 import com.example.arup.personalaccount.FragmentList.fragmentBankAccountList;
@@ -43,6 +44,27 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frmMainContainer, fragmentAccountHead);
+                fragmentTransaction.commit();
+            }
+            else if(fragment.equals("fragmentBankAcc")){
+                Bundle bundle = new Bundle();
+                bundle.putString("accId",parm);
+                fragmentBankAcc fragmentBankAcc = new fragmentBankAcc();
+                fragmentBankAcc.setArguments(bundle);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frmMainContainer, fragmentBankAcc);
+                fragmentTransaction.commit();
+            }
+
+            else if(fragment.equals("fragmentBankInfo")){
+                Bundle bundle = new Bundle();
+                bundle.putString("bankId",parm);
+                fragmentBankInfo fragmentBankInfo = new fragmentBankInfo();
+                fragmentBankInfo.setArguments(bundle);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frmMainContainer, fragmentBankInfo);
                 fragmentTransaction.commit();
             }
         }
@@ -107,12 +129,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "" + R.id.itmIncomeExpenseLedger, Toast.LENGTH_LONG).show();
         }
         else if(item.getItemId()==android.R.id.home){
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.frmMainContainer, new fragmentDashboard());
-//            fragmentTransaction.commit();
-            if(fname.equals("fragmentBankAcc")){
 
+            if(fname.equals("fragmentBankAcc")){
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frmMainContainer, new fragmentBankAccountList());
@@ -124,7 +142,13 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.frmMainContainer, new fragmentAccountHeadList());
                 fragmentTransaction.commit();
             }
-            else if(fname.equals("fragmentAccountHeadList")){
+            else if(fname.equals("fragmentBankInfo")){
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frmMainContainer, new fragmentBankList());
+                fragmentTransaction.commit();
+            }
+            else{
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frmMainContainer, new fragmentDashboard());

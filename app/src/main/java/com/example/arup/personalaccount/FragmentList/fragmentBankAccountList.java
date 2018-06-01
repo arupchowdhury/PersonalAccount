@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.example.arup.personalaccount.CustomListView.BankAccListAdapter;
 import com.example.arup.personalaccount.DBHelper.BankAccInfoHelper;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class fragmentBankAccountList extends Fragment implements View.OnClickListener {
+public class fragmentBankAccountList extends Fragment implements View.OnClickListener,SearchView.OnQueryTextListener {
 
 
     ArrayList<BankAccInformation> dataModels;
@@ -31,6 +33,10 @@ public class fragmentBankAccountList extends Fragment implements View.OnClickLis
     Button btnAddNewBankAcc;
     private static BankAccListAdapter adapter;
     BankAccInfoHelper bankAccInfoHelper;
+
+    private SearchView mSearchView;
+    android.widget.Filter filter;
+
     public fragmentBankAccountList() {
         // Required empty public constructor
     }
@@ -46,14 +52,18 @@ public class fragmentBankAccountList extends Fragment implements View.OnClickLis
         btnAddNewBankAcc = view.findViewById(R.id.btnAddNewBankAcc);
         bankAccInfoHelper = new BankAccInfoHelper(getContext());
         dataModels= new ArrayList<BankAccInformation>();
-//        dataModels.add(new BankAccInformation(1,1,"1236547","Mothijhil","Janata Bank"));
-//        dataModels.add(new BankAccInformation(2,1,"1236545","Gulshan","Janata Bank"));
-//        dataModels.add(new BankAccInformation(3,1,"1236565","Middle Badda","Janata Bank"));
+
         dataModels=bankAccInfoHelper.getBakAccList();
         adapter = new BankAccListAdapter(getActivity(),R.layout.bankacclistview,dataModels);
         listView.setAdapter(adapter);
 
         btnAddNewBankAcc.setOnClickListener(this);
+
+        listView.setAdapter(adapter);
+
+        listView.setTextFilterEnabled(false);
+        listView.setAdapter(adapter);
+        //filter = adapter.getFilter();
 
         return view;
     }
@@ -66,5 +76,29 @@ public class fragmentBankAccountList extends Fragment implements View.OnClickLis
             fragmentTransaction.replace(R.id.frmMainContainer,new fragmentBankAcc());
             fragmentTransaction.commit();
         }
+    }
+
+
+    private void searchView(){
+        mSearchView.setOnQueryTextListener(this);
+        mSearchView.setSubmitButtonEnabled(true);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (TextUtils.isEmpty(newText)) {
+            //ctlist.clearTextFilter();
+            filter.filter("");
+
+        } else {
+            //ctlist.setFilterText(newText);
+            filter.filter(newText);
+        }
+        return true;
     }
 }

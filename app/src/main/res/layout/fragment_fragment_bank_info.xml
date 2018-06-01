@@ -12,9 +12,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="Income Expense Head"
+        android:text="Bank"
         android:textSize="20dp" />
-
 
 
     <EditText
@@ -23,11 +22,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="49dp"
+        android:layout_marginTop="122dp"
         android:ems="10"
         android:hint="Bank Id"
         android:inputType="textPersonName"
-        android:text="" />
+        android:text=""
+        android:visibility="invisible" />
 
     <EditText
         android:id="@+id/etBankName"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="103dp"
+        android:layout_marginTop="57dp"
         android:ems="10"
         android:hint="Bank Name"
         android:inputType="textPersonName"
@@ -59,5 +59,13 @@
         android:layout_alignTop="@+id/btnSaveBank"
         android:layout_marginEnd="26dp"
         android:text="Delete" />
+
+    <Button
+        android:id="@+id/btnRefreshBank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnSaveBank"
+        android:layout_centerHorizontal="true"
+        android:text="Refresh" />
 
 </RelativeLayout>

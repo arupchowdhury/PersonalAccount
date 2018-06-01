@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.example.arup.personalaccount.CustomListView.BankListAdapter;
 import com.example.arup.personalaccount.DBHelper.BankInfoHelper;
@@ -30,6 +31,10 @@ public class fragmentBankList extends Fragment implements View.OnClickListener {
     ListView listView;
     Button btnAddNewBank;
     private static BankListAdapter adapter;
+
+    private SearchView mSearchView;
+    android.widget.Filter filter;
+
     public fragmentBankList() {
         // Required empty public constructor
     }
@@ -47,16 +52,21 @@ public class fragmentBankList extends Fragment implements View.OnClickListener {
         dataModels= new ArrayList<BankInformation>();
         dataModels = bankInfoHelper.getBankList();
 
-        dataModels.add(new BankInformation(1,"Janata Bank"));
-        dataModels.add(new BankInformation(2,"Agroni Bank"));
-        dataModels.add(new BankInformation(3,"Sonali Bank"));
-        dataModels.add(new BankInformation(4,"Krishi Bank"));
-        dataModels.add(new BankInformation(5,"Rupali Bank"));
+//        dataModels.add(new BankInformation(1,"Janata Bank"));
+//        dataModels.add(new BankInformation(2,"Agroni Bank"));
+//        dataModels.add(new BankInformation(3,"Sonali Bank"));
+//        dataModels.add(new BankInformation(4,"Krishi Bank"));
+//        dataModels.add(new BankInformation(5,"Rupali Bank"));
 
         adapter = new BankListAdapter(getActivity(),R.layout.bankinfolistview,dataModels);
         listView.setAdapter(adapter);
 
         btnAddNewBank.setOnClickListener(this);
+
+        listView.setAdapter(adapter);
+
+        listView.setTextFilterEnabled(false);
+        listView.setAdapter(adapter);
 
         return view;
     }

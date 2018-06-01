@@ -73,6 +73,20 @@ public class BankAccInfoHelper {
         }
     }
 
+    public long deleteContactInfo(int id){
+        try{
+            database = databaseHelper.getWritableDatabase();
+            long _id = database.delete(TABLE_BANKACCINFO,
+                    ""+COL_ACCID+"=?",new String[]{String.valueOf(id)});
+            database.close();
+            return _id;
+        }
+        catch (Exception ex){
+            throw ex;
+        }
+
+    }
+
     public ArrayList<BankAccInformation> getBakAccList(){
         try{
             database = databaseHelper.getReadableDatabase();

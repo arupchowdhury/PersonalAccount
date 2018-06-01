@@ -130,7 +130,7 @@ public class fragmentAccountHead extends Fragment implements View.OnClickListene
                             AccountHeadHelper accountHeadHelper = new AccountHeadHelper(getActivity());
                             long _id =  accountHeadHelper.deleteContactInfo(Integer.parseInt(etHeadId.getText().toString()));
                             if(_id>0){
-
+                                clearAll();
                                 FragmentManager fragmentManager=getFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 fragmentTransaction.replace(R.id.frmMainContainer,new fragmentAccountHeadList());
