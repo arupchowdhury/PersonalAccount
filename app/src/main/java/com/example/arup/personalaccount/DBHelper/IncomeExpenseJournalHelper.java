@@ -57,7 +57,7 @@ public class IncomeExpenseJournalHelper {
         databaseHelper = new DatabaseHelper(context);
     }
 
-    public long insertAccountHead(IncomeExpenseJournal incomeExpenseJournal){
+    public long insertIncomeExpenseJournal(IncomeExpenseJournal incomeExpenseJournal){
         try{
             database = databaseHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
@@ -78,6 +78,36 @@ public class IncomeExpenseJournalHelper {
             contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getCreatedate().toString());
             contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getUpdatedDate().toString());
             long _id = database.insert(TABLE_INCOMEEXPENSEJOURNAL,null,contentValues);
+            database.close();
+            return _id;
+        }
+        catch (Exception ex){
+            ex.getStackTrace();
+            return 0;
+        }
+    }
+
+    public long updateIncomeExpenseJournal(IncomeExpenseJournal incomeExpenseJournal){
+        try{
+            database = databaseHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COL_TRANSID,incomeExpenseJournal.getTransId());
+//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getPostingDate().toString());
+//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getHeadId());
+//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getIncomeAmount());
+//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getExpenseAmount());
+//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getAccountTypeName());
+//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getPaymentMethodId());
+//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getBankName());
+//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getAccountName());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getChequeNo());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getPaymentStatusId());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getDescription());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getJournalRemark());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getRefrenceNum());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getCreatedate().toString());
+            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getUpdatedDate().toString());
+            long _id = database.update(TABLE_INCOMEEXPENSEJOURNAL,contentValues,COL_TRANSID+"=?",new String[]{Integer.toString(incomeExpenseJournal.getTransId())});
             database.close();
             return _id;
         }

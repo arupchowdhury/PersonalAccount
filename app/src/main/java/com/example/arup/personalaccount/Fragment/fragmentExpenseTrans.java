@@ -13,14 +13,17 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 import com.example.arup.personalaccount.DBHelper.AccountHeadHelper;
 import com.example.arup.personalaccount.DBHelper.BankAccInfoHelper;
 import com.example.arup.personalaccount.DBHelper.BankInfoHelper;
+import com.example.arup.personalaccount.DBHelper.IncomeExpenseJournalHelper;
 import com.example.arup.personalaccount.Model.BankAccInformation;
 import com.example.arup.personalaccount.Model.BankInformation;
 import com.example.arup.personalaccount.Model.IncomeExpenseHead;
+import com.example.arup.personalaccount.Model.IncomeExpenseJournal;
 import com.example.arup.personalaccount.R;
 
 import java.text.DateFormat;
@@ -28,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +40,7 @@ import java.util.Date;
 
 public class fragmentExpenseTrans extends Fragment implements View.OnClickListener {
 
-EditText etexpenseAmount,etchequeNo,etdescription,etjournalRemark,etpostingDate,etreferenceNo;
+EditText etexpenseAmount,etchequeNo,etdescription,etjournalRemark,etpostingDate,etreferenceNo,etTransIdExpense;
 
 Spinner spinExpenseAccId,spinPaymentMethod,spinBankId,spinBankAcc,spinPaymentStatus;
 Button btnSaveExpense,btnCancelExpense;
@@ -54,6 +58,8 @@ String[]paymentMethodarry = new String[]{"Cash","Bank"};
 String[]paymentStatusArray = new String[]{"Paid","Due","Advance"};
 ArrayAdapter<String> paymentMethodAdapter;
 ArrayAdapter<String> paymentStatusAdapter;
+
+IncomeExpenseJournalHelper incomeExpenseJournalHelper;
 
     public fragmentExpenseTrans() {
         // Required empty public constructor
@@ -75,10 +81,13 @@ ArrayAdapter<String> paymentStatusAdapter;
         etdescription = view.findViewById(R.id.etDescription);
         etjournalRemark = view.findViewById(R.id.etRemark);
         etpostingDate = view.findViewById(R.id.dpPostingDate);
+        etTransIdExpense = view.findViewById(R.id.etTransIdExpense);
 
 
         btnSaveExpense = view.findViewById(R.id.btnSaveExpense);
         btnCancelExpense = view.findViewById(R.id.btnCancelExpense);
+
+        //etpostingDate.setEnabled(false);
 
         loadspinExpense();
         loadspinPaymentMethodAdapter();
@@ -130,39 +139,9 @@ ArrayAdapter<String> paymentStatusAdapter;
         });
 
 
-
-//        final Calendar myCalendar = Calendar.getInstance();
-//        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-//
-//            @Override
-//            public void onDateSet(DatePicker view, int year, int monthOfYear,
-//                                  int dayOfMonth) {
-//                // TODO Auto-generated method stub
-//                myCalendar.set(Calendar.YEAR, year);
-//                myCalendar.set(Calendar.MONTH, monthOfYear);
-//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//                //updateLabel();
-//            }
-//
-//        };
-
-//        etpostingDate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new DatePickerDialog(getActivity(), date, myCalendar
-//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-//            }
-//        });
-
-
-
-
-
-
-
         btnSaveExpense.setOnClickListener(this);
         btnCancelExpense.setOnClickListener(this);
+        etpostingDate.setOnClickListener(this);
 
         return view;
     }
@@ -229,35 +208,112 @@ ArrayAdapter<String> paymentStatusAdapter;
 
     @Override
     public void onClick(View v) {
-//        try{
-//            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//
-//            if(v==btnSaveExpense){
-//                try {
-//
-//                    String postingDate=etpostingDate.getText().toString();
-//                    int headId =spinIncomeHeadVal;
-//                    double incomeAmount=0;
-//                    double expenseAmount=Double.parseDouble(etexpenseAmount.getText().toString());
-//                    String accountTypeName="Expense";
-//                    String paymentMethodId=spinPaymentMethod.getSelectedItem().toString();
-//                    String paymentStatusId=spinPaymentStatus.getSelectedItem().toString();
-//                    String description=etdescription.getText().toString();
-//                    String journalRemark=etjournalRemark.getText().toString();
-//                    String refrenceNum="";
-//                    String createdate= dateFormat.format(new Date());
-//                    String updatedDate="";
-//
-//                    int bankName=spinBankNameVal;
-//                    int accountName=spinBankAccNoVal;
-//                }
-//                catch (Exception ex){
-//                    throw ex;
-//                }
-//            }
-//        }
-//        catch (Exception ex){
-//            throw ex;
-//        }
+        try{
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+            if(v==btnSaveExpense){
+                try {
+
+                    incomeExpenseJournalHelper = new IncomeExpenseJournalHelper(getActivity());
+
+
+                    String postingDate=etpostingDate.getText().toString();
+                    int headId =spinIncomeHeadVal;
+                    double incomeAmount=0;
+                    double expenseAmount=Double.parseDouble(etexpenseAmount.getText().toString());
+                    String accountTypeName="Expense";
+                    String paymentMethodId=spinPaymentMethod.getSelectedItem().toString();
+                    String paymentStatusId=spinPaymentStatus.getSelectedItem().toString();
+                    String description=etdescription.getText().toString();
+                    String journalRemark=etjournalRemark.getText().toString();
+                    String refrenceNum="";
+                    String createdate= dateFormat.format(new Date());
+                    String updatedDate="";
+                    String chequeNo=etchequeNo.getText().toString();
+
+                    int bankName=spinBankNameVal;
+                    int accountName=spinBankAccNoVal;
+
+                    AtomicLong id = new AtomicLong();
+                    String message="";
+
+                    if(!etTransIdExpense.getText().toString().matches("")){
+                        int transId = Integer.parseInt(etTransIdExpense.getText().toString());
+                        IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
+                                transId,postingDate,headId,incomeAmount,expenseAmount,accountTypeName,paymentMethodId,chequeNo,
+                                paymentStatusId,description,journalRemark,refrenceNum,createdate,updatedDate,bankName,accountName
+                        );
+                        id.set(incomeExpenseJournalHelper.updateIncomeExpenseJournal(incomeExpenseJournal));
+                        message="Successfully updated";
+
+                    }
+                    else {
+                        IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
+                                postingDate,headId,incomeAmount,expenseAmount,accountTypeName,paymentMethodId,chequeNo,
+                                paymentStatusId,description,journalRemark,refrenceNum,createdate,updatedDate,bankName,accountName
+                        );
+                        id.set(incomeExpenseJournalHelper.insertIncomeExpenseJournal(incomeExpenseJournal));
+                        message="Successfully saved";
+                    }
+                    if(id.get()>0){
+                        Toast.makeText(getActivity(),""+message,Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(getActivity(),"Error",Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch (Exception ex){
+                    throw ex;
+                }
+            }
+            else if(v==btnCancelExpense){
+                try{
+                    String postingDate=etpostingDate.getText().toString();
+                    int headId =spinIncomeHeadVal;
+                    double incomeAmount=0;
+                    double expenseAmount= - Double.parseDouble(etexpenseAmount.getText().toString());
+                    String accountTypeName="Expense";
+                    String paymentMethodId=spinPaymentMethod.getSelectedItem().toString();
+                    String paymentStatusId=spinPaymentStatus.getSelectedItem().toString();
+                    String description=etdescription.getText().toString();
+                    String journalRemark=(etjournalRemark.getText().toString().matches(""))? etTransIdExpense.getText().toString()+"- Cancel":etjournalRemark.getText().toString();
+                    String refrenceNum=etTransIdExpense.getText().toString();
+                    String createdate= dateFormat.format(new Date());
+                    String updatedDate="";
+                    String chequeNo=etchequeNo.getText().toString();
+
+                    int bankName=spinBankNameVal;
+                    int accountName=spinBankAccNoVal;
+                }
+                catch (Exception ex){
+                    throw ex;
+                }
+            }
+            else if(v==etpostingDate){
+                Calendar calendar = Calendar.getInstance();
+                int year= calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        getDate(i,i1,i2);
+                    }
+                },year,month,day);
+                //datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis()+7 * 1000 * 60 * 60 * 24);
+                //datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis()-7 * 1000 * 60 * 60 * 24);
+                datePickerDialog.show();
+            }
+        }
+        catch (Exception ex){
+            throw ex;
+        }
+    }
+
+    private void getDate(int year,int month, int day){
+        StringBuilder str = new StringBuilder();
+        String date = year+"/"+month+"/"+day+" 00:00:00";//str.append(day)+str.append(:)+str.append(month)+"/"+str.append(year);
+        etpostingDate.setText(date);
+
     }
 }

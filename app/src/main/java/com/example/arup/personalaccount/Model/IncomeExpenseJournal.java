@@ -64,6 +64,24 @@ public class IncomeExpenseJournal {
         this.accountName = accountName;
     }
 
+    public IncomeExpenseJournal(String postingDate, int headId, double incomeAmount, double expenseAmount, String accountTypeName, String paymentMethodId, String chequeNo, String paymentStatusId, String description, String journalRemark, String refrenceNum, String createdate, String updatedDate, int bankName, int accountName) {
+        this.postingDate = postingDate;
+        this.headId = headId;
+        this.incomeAmount = incomeAmount;
+        this.expenseAmount = expenseAmount;
+        this.accountTypeName = accountTypeName;
+        this.paymentMethodId = paymentMethodId;
+        this.chequeNo = chequeNo;
+        this.paymentStatusId = paymentStatusId;
+        this.description = description;
+        this.journalRemark = journalRemark;
+        this.refrenceNum = refrenceNum;
+        this.createdate = createdate;
+        this.updatedDate = updatedDate;
+        this.bankName = bankName;
+        this.accountName = accountName;
+    }
+
     public IncomeExpenseJournal() {
     }
 
