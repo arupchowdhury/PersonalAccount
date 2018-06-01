@@ -77,8 +77,8 @@ ArrayAdapter<String> paymentStatusAdapter;
         etpostingDate = view.findViewById(R.id.dpPostingDate);
 
 
-        btnSaveExpense = view.findViewById(R.id.btnSaveAcchead);
-        btnCancelExpense = view.findViewById(R.id.btnCancel);
+        btnSaveExpense = view.findViewById(R.id.btnSaveExpense);
+        btnCancelExpense = view.findViewById(R.id.btnCancelExpense);
 
         loadspinExpense();
         loadspinPaymentMethodAdapter();
@@ -128,6 +128,7 @@ ArrayAdapter<String> paymentStatusAdapter;
 
             }
         });
+
 
 
 //        final Calendar myCalendar = Calendar.getInstance();

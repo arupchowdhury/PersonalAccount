@@ -132,7 +132,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/btnSave"
+        android:id="@+id/btnSaveExpense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -141,7 +141,7 @@
         android:text="Save" />
 
     <Button
-        android:id="@+id/btnCancel"
+        android:id="@+id/btnCancelExpense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
