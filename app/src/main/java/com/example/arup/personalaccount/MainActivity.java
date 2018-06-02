@@ -176,6 +176,18 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.frmMainContainer, new fragmentBankList());
                 fragmentTransaction.commit();
             }
+            else if(fname.equals("fragmentIncomeTrans")){
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frmMainContainer, new fragmentIncomeList());
+                fragmentTransaction.commit();
+            }
+            else if(fname.equals("fragmentExpenseTrans")){
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frmMainContainer, new fragmentExpenseList());
+                fragmentTransaction.commit();
+            }
             else{
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
