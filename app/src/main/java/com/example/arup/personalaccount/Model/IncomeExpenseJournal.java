@@ -23,6 +23,8 @@ public class IncomeExpenseJournal {
     private int bankName;
     private int accountName;
 
+    private String headName;
+
     public int getBankName() {
         return bankName;
     }
@@ -83,6 +85,14 @@ public class IncomeExpenseJournal {
     }
 
     public IncomeExpenseJournal() {
+    }
+
+    public IncomeExpenseJournal(int transId, String postingDate, double expenseAmount, String journalRemark, String headName) {
+        this.transId = transId;
+        this.postingDate = postingDate;
+        this.expenseAmount = expenseAmount;
+        this.journalRemark = journalRemark;
+        this.headName = headName;
     }
 
     public int getTransId() {
@@ -195,5 +205,13 @@ public class IncomeExpenseJournal {
 
     public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    public String getHeadName() {
+        return headName;
+    }
+
+    public void setHeadName(String headName) {
+        this.headName = headName;
     }
 }

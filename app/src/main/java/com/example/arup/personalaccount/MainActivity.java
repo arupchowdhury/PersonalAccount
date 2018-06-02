@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.arup.personalaccount.Fragment.fragmentAccountHead;
 import com.example.arup.personalaccount.Fragment.fragmentBankAcc;
 import com.example.arup.personalaccount.Fragment.fragmentBankInfo;
+import com.example.arup.personalaccount.Fragment.fragmentExpenseTrans;
 import com.example.arup.personalaccount.FragmentList.fragmentAccountHeadList;
 import com.example.arup.personalaccount.Fragment.fragmentDashboard;
 import com.example.arup.personalaccount.FragmentList.fragmentBankAccountList;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.frmMainContainer, fragmentBankAcc);
                 fragmentTransaction.commit();
             }
-
+            //fragmentExpenseTrans
             else if(fragment.equals("fragmentBankInfo")){
                 Bundle bundle = new Bundle();
                 bundle.putString("bankId",parm);
@@ -65,6 +66,17 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frmMainContainer, fragmentBankInfo);
+                fragmentTransaction.commit();
+            }
+
+            else if(fragment.equals("fragmentExpenseTrans")){
+                Bundle bundle = new Bundle();
+                bundle.putString("transId",parm);
+                fragmentExpenseTrans fragmentExpenseTrans = new fragmentExpenseTrans();
+                fragmentExpenseTrans.setArguments(bundle);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frmMainContainer, fragmentExpenseTrans);
                 fragmentTransaction.commit();
             }
         }
