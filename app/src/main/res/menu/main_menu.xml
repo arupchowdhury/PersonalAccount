@@ -6,7 +6,7 @@
         android:title="Income Expense Head"
         />
     <item android:id="@+id/itmBankInfo"
-        android:title="Bank Name" />
+        android:title="Bank Incormation" />
     <item android:id="@+id/itmBankAcc"
         android:title="Bank Account" />
 
@@ -14,22 +14,24 @@
         android:title="Income" />
     <item android:id="@+id/itmExpense"
         android:title="Expense" />
-    <item
-    android:title="Report">
-        <menu>
-            <item android:id="@+id/itmIncomeReport"
-                android:title="Income Report"
-            />
-            <item android:id="@+id/itmExpenseReport"
-                android:title="Expense Report"
-            />
-            <item android:id="@+id/itmHeadWiserReport"
-                android:title="Income Expense Wise Summary"
-            />
-            <item android:id="@+id/itmIncomeExpenseLedger"
-                android:title="General Ledger"
-            />
-        </menu>
-    </item>
+    <item android:id="@+id/itmAccountledger"
+        android:title="Income Expense Ledger" />
+    <!--<item-->
+    <!--android:title="Report">-->
+        <!--<menu>-->
+            <!--<item android:id="@+id/itmIncomeReport"-->
+                <!--android:title="Income Report"-->
+            <!--/>-->
+            <!--<item android:id="@+id/itmExpenseReport"-->
+                <!--android:title="Expense Report"-->
+            <!--/>-->
+            <!--<item android:id="@+id/itmHeadWiserReport"-->
+                <!--android:title="Income Expense Wise Summary"-->
+            <!--/>-->
+            <!--<item android:id="@+id/itmIncomeExpenseLedger"-->
+                <!--android:title="General Ledger"-->
+            <!--/>-->
+        <!--</menu>-->
+    <!--</item>-->
 
 </menu>

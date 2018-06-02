@@ -247,4 +247,40 @@ public class IncomeExpenseJournalHelper {
         }
     }
 
+
+    public ArrayList<IncomeExpenseJournal> getLedgerList(String fromdate,String todate){
+        try{
+            database = databaseHelper.getReadableDatabase();
+            String query = "SELECT  T0."+COL_TRANSID+", T0."+COL_POSTINGDATE+", T0."+COL_EXPENSEAMOUNT+
+                    ", T0."+COL_JOURNALREMARK+", T1."+accountHeadHelper.COL_HEADNAME+","+COL_INCOMEAMOUNT+"  FROM  "
+                    +TABLE_INCOMEEXPENSEJOURNAL+" T0 INNER JOIN "+" "+accountHeadHelper.TABLE_ACCOUNTHEAD+
+                    "  T1 ON  T0."+COL_HEADID+"=  T1."+accountHeadHelper.COL_HEADID+"  WHERE T0."+COL_POSTINGDATE+"  BETWEEN "+"'"+fromdate+"' AND '"+todate+"'";
+//            Cursor cursor = database.query(TABLE_INCOMEEXPENSEJOURNAL,null,null,null,null,null,null);
+            Cursor cursor = database.rawQuery(query,null);
+            ArrayList<IncomeExpenseJournal> incomeExpenseJournalArrayList= new ArrayList<IncomeExpenseJournal>();
+
+            if(cursor.moveToFirst()){
+                do {
+                    int transId = cursor.getInt(cursor.getColumnIndex(COL_TRANSID));
+                    String postingdate = cursor.getString(cursor.getColumnIndex(COL_POSTINGDATE));
+                    Double expenseAmount = cursor.getDouble(cursor.getColumnIndex(COL_EXPENSEAMOUNT));
+                    String journalRemark = cursor.getString(cursor.getColumnIndex(COL_JOURNALREMARK));
+                    String accHeadName = cursor.getString(cursor.getColumnIndex(accountHeadHelper.COL_HEADNAME));
+                    Double incomeAmount = cursor.getDouble(cursor.getColumnIndex(COL_INCOMEAMOUNT));
+                    IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
+                            transId,postingdate,expenseAmount,journalRemark,accHeadName,incomeAmount
+                    );
+                    incomeExpenseJournalArrayList.add(incomeExpenseJournal);
+                }while (cursor.moveToNext());
+            }
+            cursor.close();
+            database.close();
+            return incomeExpenseJournalArrayList;
+
+        }
+        catch (Exception ex){
+            throw ex;
+        }
+    }
+
 }

@@ -17,6 +17,7 @@ import com.example.arup.personalaccount.Fragment.fragmentBankAcc;
 import com.example.arup.personalaccount.Fragment.fragmentBankInfo;
 import com.example.arup.personalaccount.Fragment.fragmentExpenseTrans;
 import com.example.arup.personalaccount.Fragment.fragmentIncomeTrans;
+import com.example.arup.personalaccount.FragmentList.AccountLedger;
 import com.example.arup.personalaccount.FragmentList.fragmentAccountHeadList;
 import com.example.arup.personalaccount.Fragment.fragmentDashboard;
 import com.example.arup.personalaccount.FragmentList.fragmentBankAccountList;
@@ -146,14 +147,14 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frmMainContainer, new fragmentExpenseList());
             fragmentTransaction.commit();
-        } else if (item.getItemId() == R.id.itmIncomeReport) {
-            Toast.makeText(this, "" + R.id.itmIncomeReport, Toast.LENGTH_LONG).show();
-        } else if (item.getItemId() == R.id.itmExpenseReport) {
-            Toast.makeText(this, "" + R.id.itmExpenseReport, Toast.LENGTH_LONG).show();
-        } else if (item.getItemId() == R.id.itmHeadWiserReport) {
-            Toast.makeText(this, "" + R.id.itmHeadWiserReport, Toast.LENGTH_LONG).show();
-        } else if (item.getItemId() == R.id.itmIncomeExpenseLedger) {
-            Toast.makeText(this, "" + R.id.itmIncomeExpenseLedger, Toast.LENGTH_LONG).show();
+        } else if (item.getItemId() == R.id.itmAccountledger) {
+            Toast.makeText(this, "" + R.id.itmAccountledger, Toast.LENGTH_LONG).show();
+            //AccountLedger
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frmMainContainer, new AccountLedger());
+            fragmentTransaction.commit();
         }
         else if(item.getItemId()==android.R.id.home){
 

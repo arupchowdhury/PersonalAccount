@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp"
+    >
+    <LinearLayout
+        android:id="@+id/layoutExpenseParentE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/tvTransIdExLVE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trans Id"
+                />
+
+            <TextView
+                android:id="@+id/tvExpenseHeadExLVE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Income Expense Head"
+                />
+
+            <TextView
+                android:id="@+id/tvPostingDateExLVE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Posting Date"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:id="@+id/tvIncomeAmountExLVE"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="10000.00"
+                    android:layout_weight="1"
+                    android:layout_gravity="right"
+                    />
+                <TextView
+                    android:id="@+id/tvExpenseAmountExLVE"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="10000.00"
+                    android:layout_weight="1"
+                    android:layout_gravity="right"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvJournalRemarkExLVE"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Jornal Remark"
+                android:gravity="right"
+                android:layout_gravity="right"
+                />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
