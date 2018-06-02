@@ -55,8 +55,8 @@ public class fragmentExpenseList extends Fragment {
         incomeExpenseJournalHelper = new IncomeExpenseJournalHelper(getActivity());
         dataModels = incomeExpenseJournalHelper.getExpenseList();
 
-        dataModels.add(new IncomeExpenseJournal(1,"2018/05/01", 12322,"","Expense For buying big fish"));
-        dataModels.add(new IncomeExpenseJournal(2,"2018/05/01", 200,"","Expense For buying vegitable"));
+//        dataModels.add(new IncomeExpenseJournal(1,"2018/05/01", 12322,"","Expense For buying big fish"));
+//        dataModels.add(new IncomeExpenseJournal(2,"2018/05/01", 200,"","Expense For buying vegitable"));
         adapter = new ExpenseListAdapter(getActivity(),R.layout.expenselistview,dataModels);
         listView.setAdapter(adapter);
 

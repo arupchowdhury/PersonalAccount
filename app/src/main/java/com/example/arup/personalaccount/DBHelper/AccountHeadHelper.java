@@ -101,6 +101,7 @@ public class AccountHeadHelper {
                 }while (cursor.moveToNext());
             }
             cursor.close();
+            database.close();
             return incomeExpenseHeadArrayList;
 
         }
@@ -117,7 +118,7 @@ public class AccountHeadHelper {
 //                    COL_HEADID+"=?",new String[]{type},null,null,null);
             Cursor cursor = database.rawQuery(queryjoin,null);
             ArrayList<IncomeExpenseHead> incomeExpenseHeadArrayList= new ArrayList<IncomeExpenseHead>();
-            incomeExpenseHeadArrayList.add(new IncomeExpenseHead(0,"--Select Expense--"));
+            incomeExpenseHeadArrayList.add(new IncomeExpenseHead(0,"--Select "+type+"--"));
             if(cursor.moveToFirst()){
                 do {
                     int accHeadId = cursor.getInt(cursor.getColumnIndex(COL_HEADID));
@@ -128,6 +129,7 @@ public class AccountHeadHelper {
                 }while (cursor.moveToNext());
             }
             cursor.close();
+            database.close();
             return incomeExpenseHeadArrayList;
 
         }
@@ -152,6 +154,7 @@ public class AccountHeadHelper {
 
             }
             cursor.close();
+            database.close();
             return incomeExpenseHead;
         }
         catch (Exception ex){
@@ -176,6 +179,7 @@ public class AccountHeadHelper {
 
             }
             cursor.close();
+            database.close();
             return incomeExpenseHead;
         }
         catch (Exception ex){

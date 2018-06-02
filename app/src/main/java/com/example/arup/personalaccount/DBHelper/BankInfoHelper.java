@@ -94,6 +94,7 @@ public class BankInfoHelper {
                 }while (cursor.moveToNext());
             }
             cursor.close();
+            database.close();
             return bankInformationArrayList;
 
         }
@@ -119,6 +120,7 @@ public class BankInfoHelper {
                 }while (cursor.moveToNext());
             }
             cursor.close();
+            database.close();
             return bankInformationArrayList;
 
         }
@@ -144,6 +146,7 @@ public class BankInfoHelper {
 
             }
             cursor.close();
+            database.close();
             return bankInformation;
         }
         catch (Exception ex){
@@ -168,6 +171,7 @@ public class BankInfoHelper {
 
             }
             cursor.close();
+            database.close();
             return bankInformation;
         }
         catch (Exception ex){

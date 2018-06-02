@@ -87,13 +87,16 @@ public class IncomeExpenseJournal {
     public IncomeExpenseJournal() {
     }
 
-    public IncomeExpenseJournal(int transId, String postingDate, double expenseAmount, String journalRemark, String headName) {
+    public IncomeExpenseJournal(int transId, String postingDate, double expenseAmount, String journalRemark, String headName,double incomeAmont) {
         this.transId = transId;
         this.postingDate = postingDate;
         this.expenseAmount = expenseAmount;
         this.journalRemark = journalRemark;
         this.headName = headName;
+        this.incomeAmount=incomeAmont;
     }
+
+
 
     public int getTransId() {
         return transId;

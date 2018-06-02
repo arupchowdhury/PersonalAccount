@@ -44,7 +44,7 @@ public class fragmentExpenseTrans extends Fragment implements View.OnClickListen
 EditText etexpenseAmount,etchequeNo,etdescription,etjournalRemark,etpostingDate,etreferenceNo,etTransIdExpense;
 
 Spinner spinExpenseAccId,spinPaymentMethod,spinBankId,spinBankAcc,spinPaymentStatus;
-Button btnSaveExpense,btnCancelExpense;
+Button btnSaveExpense,btnCancelExpense,btnRefreshExpense;
 
 int spinIncomeHeadVal=0;
 int spinBankNameVal=0;
@@ -83,23 +83,26 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
         etjournalRemark = view.findViewById(R.id.etRemark);
         etpostingDate = view.findViewById(R.id.dpPostingDate);
         etTransIdExpense = view.findViewById(R.id.etTransIdExpense);
-
+        etreferenceNo = view.findViewById(R.id.etreferenceNo);
 
         btnSaveExpense = view.findViewById(R.id.btnSaveExpense);
         btnCancelExpense = view.findViewById(R.id.btnCancelExpense);
+        btnRefreshExpense = view.findViewById(R.id.btnRefreshExpense);
 
-        //etpostingDate.setEnabled(false);
-
+        etjournalRemark.setEnabled(false);
+        etreferenceNo.setEnabled(false);
 
         loadspinExpense();
         loadspinPaymentMethodAdapter();
         //initializeCboAll();
         loadspinPaymentStatusAdapter();
         loadBankInfoList();
+        loadBankAccList(0);
 
         if(getArguments()!=null){
             String strtext = getArguments().getString("transId");
             Toast.makeText(getActivity(),""+strtext,Toast.LENGTH_LONG).show();
+            disableAllControl();
             loadAllContent(strtext);
         }
 
@@ -123,7 +126,7 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
 //                    loadBankInfoList();
                 }
                 else {
-                    initializeCboAll();
+//                    initializeCboAll();
                 }
             }
 
@@ -138,7 +141,7 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     BankInformation bankInformation = (BankInformation) parent.getSelectedItem();
                     spinBankNameVal=bankInformation.getBankId();
-                    loadBankAccList(bankInformation.getBankId());
+//                    loadBankAccList(bankInformation.getBankId());
             }
 
             @Override
@@ -164,6 +167,7 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
         btnSaveExpense.setOnClickListener(this);
         btnCancelExpense.setOnClickListener(this);
         etpostingDate.setOnClickListener(this);
+        btnRefreshExpense.setOnClickListener(this);
 
         return view;
     }
@@ -262,26 +266,33 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
         etjournalRemark.setText((incomeExpenseJournal.getJournalRemark()==null)?"":incomeExpenseJournal.getJournalRemark());
         etpostingDate.setText(incomeExpenseJournal.getPostingDate());
         if(!incomeExpenseJournal.getRefrenceNum().equals(""))
-            etreferenceNo.setText((incomeExpenseJournal.getRefrenceNum()==null)?"":incomeExpenseJournal.getRefrenceNum());
+            etreferenceNo.setText(incomeExpenseJournal.getRefrenceNum());
         etTransIdExpense.setText(Integer.toString(incomeExpenseJournal.getTransId()));
 
 
-        //int indexAccHead = getIndexAccHead(adapterIncome,Integer.toString(incomeExpenseJournal.getHeadId()));
+
         spinExpenseAccId.setSelection(getIndexAccHead(adapterIncome,Integer.toString(incomeExpenseJournal.getHeadId())));
+        spinIncomeHeadVal=incomeExpenseJournal.getHeadId();
 
         int index = Arrays.asList(paymentMethodarry).indexOf(incomeExpenseJournal.getPaymentMethodId());
         spinPaymentMethod.setSelection(index);
 //        loadBankInfoList();
         if(incomeExpenseJournal.getPaymentMethodId().equals("Bank")){
 //            loadBankInfoList();
-//            int indexbank = getIndexBank(adapterBankInfo,Integer.toString(incomeExpenseJournal.getBankName()));
-            spinBankId.setSelection(getIndexBank(adapterBankInfo,Integer.toString(incomeExpenseJournal.getBankName())));
 
+            spinBankId.setSelection(getIndexBank(adapterBankInfo,Integer.toString(incomeExpenseJournal.getBankName())));
+            spinBankNameVal=incomeExpenseJournal.getBankName();
 
             loadBankAccList(incomeExpenseJournal.getBankName());
-//            int indexbankAcc = getIndexBankAcc(adapterBankAccInfo,Integer.toString(incomeExpenseJournal.getAccountName()));
-            spinBankAcc.setSelection(getIndexBankAcc(adapterBankAccInfo,Integer.toString(incomeExpenseJournal.getAccountName())));
+            try {
+                Thread.sleep(4000);
+                spinBankAcc.setSelection(getIndexBankAcc(adapterBankAccInfo,Integer.toString(incomeExpenseJournal.getAccountName())));
+                spinBankAccNoVal=incomeExpenseJournal.getAccountName();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
 
         int indexPaymentStatus = Arrays.asList(paymentStatusArray).indexOf(incomeExpenseJournal.getPaymentStatusId());
         spinPaymentStatus.setSelection(indexPaymentStatus);
@@ -297,8 +308,9 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
             if(v==btnSaveExpense){
                 try {
 
+                    if(!checkvalidation())
+                        return;
                     incomeExpenseJournalHelper = new IncomeExpenseJournalHelper(getActivity());
-
 
                     String postingDate=etpostingDate.getText().toString();
                     int headId =spinIncomeHeadVal;
@@ -309,7 +321,7 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
                     String paymentStatusId=spinPaymentStatus.getSelectedItem().toString();
                     String description=etdescription.getText().toString();
                     String journalRemark=etjournalRemark.getText().toString();
-                    String refrenceNum="";
+                    String refrenceNum=etreferenceNo.getText().toString();
                     String createdate= dateFormat.format(new Date());
                     String updatedDate="";
                     String chequeNo=etchequeNo.getText().toString();
@@ -322,13 +334,13 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
 
                     if(!etTransIdExpense.getText().toString().matches("")){
                         int transId = Integer.parseInt(etTransIdExpense.getText().toString());
+                        updatedDate=dateFormat.format(new Date());
                         IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
                                 transId,postingDate,headId,incomeAmount,expenseAmount,accountTypeName,paymentMethodId,chequeNo,
                                 paymentStatusId,description,journalRemark,refrenceNum,createdate,updatedDate,bankName,accountName
                         );
                         id.set(incomeExpenseJournalHelper.updateIncomeExpenseJournal(incomeExpenseJournal));
                         message="Successfully updated";
-
                     }
                     else {
                         IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
@@ -340,9 +352,11 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
                     }
                     if(id.get()>0){
                         Toast.makeText(getActivity(),""+message,Toast.LENGTH_LONG).show();
+                        clearAll();
                     }
                     else {
                         Toast.makeText(getActivity(),"Error",Toast.LENGTH_LONG).show();
+                        clearAll();
                     }
                 }
                 catch (Exception ex){
@@ -351,6 +365,10 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
             }
             else if(v==btnCancelExpense){
                 try{
+                    if(!etjournalRemark.getText().toString().matches(""))
+                        return;
+
+                    int transId = Integer.parseInt(etTransIdExpense.getText().toString());
                     String postingDate=etpostingDate.getText().toString();
                     int headId =spinIncomeHeadVal;
                     double incomeAmount=0;
@@ -359,7 +377,7 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
                     String paymentMethodId=spinPaymentMethod.getSelectedItem().toString();
                     String paymentStatusId=spinPaymentStatus.getSelectedItem().toString();
                     String description=etdescription.getText().toString();
-                    String journalRemark=(etjournalRemark.getText().toString().matches(""))? etTransIdExpense.getText().toString()+"- Cancel":etjournalRemark.getText().toString();
+                    String journalRemark= etTransIdExpense.getText().toString()+" - Cancel";
                     String refrenceNum=etTransIdExpense.getText().toString();
                     String createdate= dateFormat.format(new Date());
                     String updatedDate="";
@@ -367,6 +385,30 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
 
                     int bankName=spinBankNameVal;
                     int accountName=spinBankAccNoVal;
+
+                    AtomicLong id = new AtomicLong();
+                    AtomicLong idupdate = new AtomicLong();
+                    String message="";
+
+                    IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
+                            postingDate,headId,incomeAmount,expenseAmount,accountTypeName,paymentMethodId,chequeNo,
+                            paymentStatusId,description,journalRemark,refrenceNum,createdate,updatedDate,bankName,accountName
+                    );
+
+                    IncomeExpenseJournal incomeExpenseJournalupdate = new IncomeExpenseJournal(
+                            transId,postingDate,headId,incomeAmount,expenseAmount,accountTypeName,paymentMethodId,chequeNo,
+                            paymentStatusId,description,journalRemark,refrenceNum,createdate,updatedDate,bankName,accountName
+                    );
+
+
+                    id.set(incomeExpenseJournalHelper.insertIncomeExpenseJournal(incomeExpenseJournal));
+                    idupdate.set(incomeExpenseJournalHelper.updateIncomeExpenseJournal(incomeExpenseJournalupdate));
+                    message="Successfully updated";
+                    if(id.get()>0){
+                        Toast.makeText(getActivity(),""+message,Toast.LENGTH_LONG).show();
+                        clearAll();
+                    }
+
                 }
                 catch (Exception ex){
                     throw ex;
@@ -387,6 +429,9 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
                 //datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis()-7 * 1000 * 60 * 60 * 24);
                 datePickerDialog.show();
             }
+            else if(v==btnRefreshExpense){
+                clearAll();
+            }
         }
         catch (Exception ex){
             throw ex;
@@ -398,5 +443,62 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
         String date = year+"/"+month+"/"+day+" 00:00:00";//str.append(day)+str.append(:)+str.append(month)+"/"+str.append(year);
         etpostingDate.setText(date);
 
+    }
+
+    private void disableAllControl(){
+        //----------------------------------
+        etjournalRemark.setEnabled(false);
+        etTransIdExpense.setEnabled(false);
+        spinExpenseAccId.setEnabled(false);
+        spinPaymentMethod.setEnabled(false);
+        spinBankId.setEnabled(false);
+        spinBankAcc.setEnabled(false);
+        etexpenseAmount.setEnabled(false);
+        etchequeNo.setEnabled(false);
+        etpostingDate.setEnabled(false);
+
+        //----------------------------------
+    }
+
+    private boolean checkvalidation(){
+        if(etpostingDate.getText().toString().matches(""))
+            return false;
+        else if(spinIncomeHeadVal==0)
+            return false;
+        else if(etexpenseAmount.getText().toString().matches("0"))
+            return false;
+        else
+            return true;
+    }
+
+    private void clearAll(){
+
+        //etjournalRemark.setEnabled(true);
+        //etTransIdExpense.setEnabled(true);
+        spinExpenseAccId.setEnabled(true);
+        spinPaymentMethod.setEnabled(true);
+        spinBankId.setEnabled(true);
+        spinBankAcc.setEnabled(true);
+        etexpenseAmount.setEnabled(true);
+        etchequeNo.setEnabled(true);
+        etpostingDate.setEnabled(true);
+
+
+
+        etexpenseAmount.setText("");
+        etchequeNo.setText("");
+        etdescription.setText("");
+        etjournalRemark.setText("");
+        etpostingDate.setText("");
+        etreferenceNo.setText("");
+        etTransIdExpense.setText("");
+        etTransIdExpense.setText("");
+
+        loadspinExpense();
+        loadspinPaymentMethodAdapter();
+        //initializeCboAll();
+        loadspinPaymentStatusAdapter();
+        loadBankInfoList();
+        loadBankAccList(0);
     }
 }

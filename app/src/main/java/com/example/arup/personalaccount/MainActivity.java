@@ -16,12 +16,14 @@ import com.example.arup.personalaccount.Fragment.fragmentAccountHead;
 import com.example.arup.personalaccount.Fragment.fragmentBankAcc;
 import com.example.arup.personalaccount.Fragment.fragmentBankInfo;
 import com.example.arup.personalaccount.Fragment.fragmentExpenseTrans;
+import com.example.arup.personalaccount.Fragment.fragmentIncomeTrans;
 import com.example.arup.personalaccount.FragmentList.fragmentAccountHeadList;
 import com.example.arup.personalaccount.Fragment.fragmentDashboard;
 import com.example.arup.personalaccount.FragmentList.fragmentBankAccountList;
 import com.example.arup.personalaccount.FragmentList.fragmentBankList;
 import com.example.arup.personalaccount.FragmentList.fragmentExpenseList;
 import com.example.arup.personalaccount.Fragment.fragmentPaymentMethod;
+import com.example.arup.personalaccount.FragmentList.fragmentIncomeList;
 
 public class MainActivity extends AppCompatActivity {
     //    FragmentManager fragmentManager;
@@ -79,6 +81,16 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.frmMainContainer, fragmentExpenseTrans);
                 fragmentTransaction.commit();
             }
+            else if(fragment.equals("fragmentIncomeTrans")){
+                Bundle bundle = new Bundle();
+                bundle.putString("transId",parm);
+                fragmentIncomeTrans fragmentExpenseTrans = new fragmentIncomeTrans();
+                fragmentExpenseTrans.setArguments(bundle);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frmMainContainer, fragmentExpenseTrans);
+                fragmentTransaction.commit();
+            }
         }
 
 
@@ -124,7 +136,10 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.frmMainContainer, new fragmentBankAccountList());
             fragmentTransaction.commit();
         } else if (item.getItemId() == R.id.itmIncome) {
-            Toast.makeText(this, "" + R.id.itmIncome, Toast.LENGTH_LONG).show();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frmMainContainer, new fragmentIncomeList());
+            fragmentTransaction.commit();
         } else if (item.getItemId() == R.id.itmExpense) {
 //            Toast.makeText(this, "" + R.id.itmExpense, Toast.LENGTH_LONG).show();
             FragmentManager fragmentManager = getSupportFragmentManager();

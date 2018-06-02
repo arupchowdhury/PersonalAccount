@@ -105,6 +105,7 @@ public class BankAccInfoHelper {
                 }while (cursor.moveToNext());
             }
             cursor.close();
+            database.close();
             return bankAccInformationArrayList;
 
         }
@@ -117,9 +118,10 @@ public class BankAccInfoHelper {
     public ArrayList<BankAccInformation> getBakAccListByBankId(int bankid){
         try{
             database = databaseHelper.getReadableDatabase();
-            String query = "SELECT "+COL_ACCID+","+COL_ACCNAME+" FROM "+TABLE_BANKACCINFO+" WHERE "+COL_BANKID+"="+Integer.toString(bankid);
+            String query = "SELECT "+COL_ACCID+","+COL_ACCNAME+" FROM "+TABLE_BANKACCINFO+"";//+" WHERE "+COL_BANKID+"="+Integer.toString(bankid);
             Cursor cursor = database.rawQuery(query,null);
             ArrayList<BankAccInformation> bankAccInformationArrayList= new ArrayList<BankAccInformation>();
+            bankAccInformationArrayList.add(new BankAccInformation(0,"--Select Accunt--"));
             if(cursor.moveToFirst()){
                 do {
                     int bankAccId = cursor.getInt(cursor.getColumnIndex(COL_ACCID));
@@ -133,6 +135,7 @@ public class BankAccInfoHelper {
                 }while (cursor.moveToNext());
             }
             cursor.close();
+            database.close();
             return bankAccInformationArrayList;
 
         }
@@ -158,6 +161,7 @@ public class BankAccInfoHelper {
                 }while (cursor.moveToNext());
             }
             cursor.close();
+            database.close();
             return bankAccInformation;
 
         }

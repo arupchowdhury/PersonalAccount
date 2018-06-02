@@ -113,6 +113,27 @@ public class IncomeExpenseJournalHelper {
         }
     }
 
+    public long updateIncomeExpenseJournalCancel(IncomeExpenseJournal incomeExpenseJournal){
+        try{
+            database = databaseHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COL_TRANSID,incomeExpenseJournal.getTransId());
+            contentValues.put(COL_PAYMENTSTATUSID,incomeExpenseJournal.getPaymentStatusId());
+            contentValues.put(COL_DESCRIPTION,incomeExpenseJournal.getDescription());
+            contentValues.put(COL_JOURNALREMARK,incomeExpenseJournal.getJournalRemark());
+            contentValues.put(COL_REFERENCENUM,incomeExpenseJournal.getRefrenceNum());
+            contentValues.put(COL_CREATEDDATE,incomeExpenseJournal.getCreatedate().toString());
+            contentValues.put(COL_UPDATEDDATE,incomeExpenseJournal.getUpdatedDate().toString());
+            long _id = database.update(TABLE_INCOMEEXPENSEJOURNAL,contentValues,COL_TRANSID+"=?",new String[]{Integer.toString(incomeExpenseJournal.getTransId())});
+            database.close();
+            return _id;
+        }
+        catch (Exception ex){
+            ex.getStackTrace();
+            return 0;
+        }
+    }
+
     public ArrayList<IncomeExpenseJournal> getExpenseList(){
         try{
             database = databaseHelper.getReadableDatabase();
@@ -133,12 +154,48 @@ public class IncomeExpenseJournalHelper {
                     String accHeadName = cursor.getString(cursor.getColumnIndex(accountHeadHelper.COL_HEADNAME));
                     //String accHeadName1 = cursor.getString(cursor.getColumnIndex(COL_HEADID));
                     IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
-                            transId,postingdate,expenseAmount,journalRemark,accHeadName
+                            transId,postingdate,expenseAmount,journalRemark,accHeadName,0
                     );
                     incomeExpenseJournalArrayList.add(incomeExpenseJournal);
                 }while (cursor.moveToNext());
             }
             cursor.close();
+            database.close();
+            return incomeExpenseJournalArrayList;
+
+        }
+        catch (Exception ex){
+            throw ex;
+        }
+    }
+
+    public ArrayList<IncomeExpenseJournal> getIncomeList(){
+        try{
+            database = databaseHelper.getReadableDatabase();
+            String query = "SELECT  T0."+COL_TRANSID+", T0."+COL_POSTINGDATE+", T0."+COL_INCOMEAMOUNT+
+                    ", T0."+COL_JOURNALREMARK+", T1."+accountHeadHelper.COL_HEADNAME+"  FROM  "
+                    +TABLE_INCOMEEXPENSEJOURNAL+" T0 INNER JOIN "+" "+accountHeadHelper.TABLE_ACCOUNTHEAD+
+                    "  T1 ON  T0."+COL_HEADID+"=  T1."+accountHeadHelper.COL_HEADID+"  WHERE T0."+COL_ACCOUNTTYPE+"='Income'";
+//            Cursor cursor = database.query(TABLE_INCOMEEXPENSEJOURNAL,null,null,null,null,null,null);
+            Cursor cursor = database.rawQuery(query,null);
+            ArrayList<IncomeExpenseJournal> incomeExpenseJournalArrayList= new ArrayList<IncomeExpenseJournal>();
+
+            if(cursor.moveToFirst()){
+                do {
+                    int transId = cursor.getInt(cursor.getColumnIndex(COL_TRANSID));
+                    String postingdate = cursor.getString(cursor.getColumnIndex(COL_POSTINGDATE));
+                    Double incomeAmount = cursor.getDouble(cursor.getColumnIndex(COL_INCOMEAMOUNT));
+                    String journalRemark = cursor.getString(cursor.getColumnIndex(COL_JOURNALREMARK));
+                    String accHeadName = cursor.getString(cursor.getColumnIndex(accountHeadHelper.COL_HEADNAME));
+                    //String accHeadName1 = cursor.getString(cursor.getColumnIndex(COL_HEADID));
+                    IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
+                            transId,postingdate,0,journalRemark,accHeadName,incomeAmount
+                    );
+                    incomeExpenseJournalArrayList.add(incomeExpenseJournal);
+                }while (cursor.moveToNext());
+            }
+            cursor.close();
+            database.close();
             return incomeExpenseJournalArrayList;
 
         }
@@ -181,6 +238,7 @@ public class IncomeExpenseJournalHelper {
                 }while (cursor.moveToNext());
             }
             cursor.close();
+            database.close();
 
             return incomeExpenseJournal;
         }
