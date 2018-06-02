@@ -81,7 +81,7 @@ public class BankInfoHelper {
         try{
             database = databaseHelper.getReadableDatabase();
             Cursor cursor = database.query(TABLE_BANKINFO,null,
-                    null,null,null,null,null);
+                    null,null,null,null,COL_BANKID);
             ArrayList<BankInformation> bankInformationArrayList= new ArrayList<BankInformation>();
 
             if(cursor.moveToFirst()){
@@ -106,8 +106,9 @@ public class BankInfoHelper {
         try{
             database = databaseHelper.getReadableDatabase();
             Cursor cursor = database.query(TABLE_BANKINFO,null,
-                    null,null,null,null,null);
+                    null,null,null,null,COL_BANKID);
             ArrayList<BankInformation> bankInformationArrayList= new ArrayList<BankInformation>();
+            bankInformationArrayList.add(new BankInformation(0,"--Select Bank--"));
             if(cursor.moveToFirst()){
                 do {
                     int bankId = cursor.getInt(cursor.getColumnIndex(COL_BANKID));

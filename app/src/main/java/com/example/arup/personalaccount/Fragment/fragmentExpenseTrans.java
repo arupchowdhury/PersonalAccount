@@ -29,6 +29,7 @@ import com.example.arup.personalaccount.R;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicLong;
@@ -89,16 +90,17 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
 
         //etpostingDate.setEnabled(false);
 
+
         loadspinExpense();
         loadspinPaymentMethodAdapter();
-        initializeCboAll();
+        //initializeCboAll();
         loadspinPaymentStatusAdapter();
-
+        loadBankInfoList();
 
         if(getArguments()!=null){
             String strtext = getArguments().getString("transId");
             Toast.makeText(getActivity(),""+strtext,Toast.LENGTH_LONG).show();
-            //loadAllContent(strtext);
+            loadAllContent(strtext);
         }
 
         spinExpenseAccId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -118,7 +120,7 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(paymentMethodarry[position].toString()=="Bank"){
-                    loadBankInfoList();
+//                    loadBankInfoList();
                 }
                 else {
                     initializeCboAll();
@@ -137,6 +139,19 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
                     BankInformation bankInformation = (BankInformation) parent.getSelectedItem();
                     spinBankNameVal=bankInformation.getBankId();
                     loadBankAccList(bankInformation.getBankId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinBankAcc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                BankAccInformation bankAccInformation=(BankAccInformation)parent.getSelectedItem();
+                spinBankAccNoVal = bankAccInformation.getAccId();
             }
 
             @Override
@@ -174,10 +189,10 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
     }
 
     private void initializeCboAll(){
-        ArrayList<BankInformation> bankInformationArrayList = new ArrayList<>();
-        bankInformationArrayList.add(new BankInformation(0,"--Select Bank--"));
-        adapterBankInfo = new ArrayAdapter<BankInformation>(getActivity(),android.R.layout.simple_spinner_dropdown_item,bankInformationArrayList);
-        spinBankId.setAdapter(adapterBankInfo);
+//        ArrayList<BankInformation> bankInformationArrayList = new ArrayList<>();
+//        bankInformationArrayList.add(new BankInformation(0,"--Select Bank--"));
+//        adapterBankInfo = new ArrayAdapter<BankInformation>(getActivity(),android.R.layout.simple_spinner_dropdown_item,bankInformationArrayList);
+//        spinBankId.setAdapter(adapterBankInfo);
 
         ArrayList<BankAccInformation> bankAccInformationArrayList = new ArrayList<>();
         bankAccInformationArrayList.add(new BankAccInformation(0,"--Select Accunt--"));
@@ -188,7 +203,7 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
     private void loadBankInfoList(){
         BankInfoHelper bankInfoHelper = new BankInfoHelper(getActivity());
         ArrayList<BankInformation> bankInformationArrayList = new ArrayList<>();
-        bankInformationArrayList = bankInfoHelper.getBankList();
+        bankInformationArrayList = bankInfoHelper.getcboBankList();
         adapterBankInfo = new ArrayAdapter<BankInformation>(getActivity(),android.R.layout.simple_spinner_dropdown_item,bankInformationArrayList);
         spinBankId.setAdapter(adapterBankInfo);
     }
@@ -211,6 +226,67 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
             }
         }
         return index;
+    }
+
+    private int getIndexBank (ArrayAdapter<BankInformation> adapter, String myString){
+
+        int index = 0;
+
+        for (int i=0;i<adapter.getCount();i++){
+            if(adapter.getItem(i).getBankId()==Integer.parseInt(myString)){
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    private int getIndexBankAcc (ArrayAdapter<BankAccInformation> adapter, String myString){
+
+        int index = 0;
+
+        for (int i=0;i<adapter.getCount();i++){
+            if(adapter.getItem(i).getAccId()==Integer.parseInt(myString)){
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    private void loadAllContent(String id){
+        IncomeExpenseJournalHelper dbhelper = new IncomeExpenseJournalHelper(getActivity());
+        IncomeExpenseJournal incomeExpenseJournal = dbhelper.getIncomeExpenseByTransId(Integer.parseInt(id));
+
+        etexpenseAmount.setText(Double.toString(incomeExpenseJournal.getExpenseAmount()));
+        etchequeNo.setText((incomeExpenseJournal.getChequeNo()==null)?"":incomeExpenseJournal.getChequeNo());
+        etdescription.setText((incomeExpenseJournal.getDescription()==null)?"":incomeExpenseJournal.getDescription());
+        etjournalRemark.setText((incomeExpenseJournal.getJournalRemark()==null)?"":incomeExpenseJournal.getJournalRemark());
+        etpostingDate.setText(incomeExpenseJournal.getPostingDate());
+        if(!incomeExpenseJournal.getRefrenceNum().equals(""))
+            etreferenceNo.setText((incomeExpenseJournal.getRefrenceNum()==null)?"":incomeExpenseJournal.getRefrenceNum());
+        etTransIdExpense.setText(Integer.toString(incomeExpenseJournal.getTransId()));
+
+
+        //int indexAccHead = getIndexAccHead(adapterIncome,Integer.toString(incomeExpenseJournal.getHeadId()));
+        spinExpenseAccId.setSelection(getIndexAccHead(adapterIncome,Integer.toString(incomeExpenseJournal.getHeadId())));
+
+        int index = Arrays.asList(paymentMethodarry).indexOf(incomeExpenseJournal.getPaymentMethodId());
+        spinPaymentMethod.setSelection(index);
+//        loadBankInfoList();
+        if(incomeExpenseJournal.getPaymentMethodId().equals("Bank")){
+//            loadBankInfoList();
+//            int indexbank = getIndexBank(adapterBankInfo,Integer.toString(incomeExpenseJournal.getBankName()));
+            spinBankId.setSelection(getIndexBank(adapterBankInfo,Integer.toString(incomeExpenseJournal.getBankName())));
+
+
+            loadBankAccList(incomeExpenseJournal.getBankName());
+//            int indexbankAcc = getIndexBankAcc(adapterBankAccInfo,Integer.toString(incomeExpenseJournal.getAccountName()));
+            spinBankAcc.setSelection(getIndexBankAcc(adapterBankAccInfo,Integer.toString(incomeExpenseJournal.getAccountName())));
+        }
+
+        int indexPaymentStatus = Arrays.asList(paymentStatusArray).indexOf(incomeExpenseJournal.getPaymentStatusId());
+        spinPaymentStatus.setSelection(indexPaymentStatus);
+
+
     }
 
     @Override

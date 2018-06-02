@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.DatePicker;
 
+import com.example.arup.personalaccount.CustomListView.ExpenseListAdapter;
 import com.example.arup.personalaccount.Model.IncomeExpenseJournal;
 
 import java.util.ArrayList;
@@ -66,7 +67,6 @@ public class IncomeExpenseJournalHelper {
         try{
             database = databaseHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            //contentValues.put(COL_HEADID,incomeExpenseHead.getHeadId());
             contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getPostingDate().toString());
             contentValues.put(COL_HEADID,incomeExpenseJournal.getHeadId());
             contentValues.put(COL_INCOMEAMOUNT,incomeExpenseJournal.getIncomeAmount());
@@ -97,21 +97,12 @@ public class IncomeExpenseJournalHelper {
             database = databaseHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(COL_TRANSID,incomeExpenseJournal.getTransId());
-//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getPostingDate().toString());
-//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getHeadId());
-//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getIncomeAmount());
-//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getExpenseAmount());
-//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getAccountTypeName());
-//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getPaymentMethodId());
-//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getBankName());
-//            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getAccountName());
-            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getChequeNo());
-            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getPaymentStatusId());
-            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getDescription());
-            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getJournalRemark());
-            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getRefrenceNum());
-            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getCreatedate().toString());
-            contentValues.put(COL_POSTINGDATE,incomeExpenseJournal.getUpdatedDate().toString());
+            contentValues.put(COL_PAYMENTSTATUSID,incomeExpenseJournal.getPaymentStatusId());
+            contentValues.put(COL_DESCRIPTION,incomeExpenseJournal.getDescription());
+            contentValues.put(COL_JOURNALREMARK,incomeExpenseJournal.getJournalRemark());
+            contentValues.put(COL_REFERENCENUM,incomeExpenseJournal.getRefrenceNum());
+            contentValues.put(COL_CREATEDDATE,incomeExpenseJournal.getCreatedate().toString());
+            contentValues.put(COL_UPDATEDDATE,incomeExpenseJournal.getUpdatedDate().toString());
             long _id = database.update(TABLE_INCOMEEXPENSEJOURNAL,contentValues,COL_TRANSID+"=?",new String[]{Integer.toString(incomeExpenseJournal.getTransId())});
             database.close();
             return _id;
@@ -153,6 +144,48 @@ public class IncomeExpenseJournalHelper {
         }
         catch (Exception ex){
             throw ex;
+        }
+    }
+
+    public IncomeExpenseJournal getIncomeExpenseByTransId(int id){
+        try{
+            database = databaseHelper.getReadableDatabase();
+            Cursor cursor = database.query(TABLE_INCOMEEXPENSEJOURNAL,null,COL_TRANSID+"=?",new String[]{Integer.toString(id)},null,null,null);
+            IncomeExpenseJournal incomeExpenseJournal=null;
+
+            if(cursor.moveToFirst()){
+                do {
+                    int transId= cursor.getInt(cursor.getColumnIndex(COL_TRANSID));
+                    //String postingdate = cursor.getString(cursor.getColumnIndex(COL_POSTINGDATE));
+                    String postingDate=cursor.getString(cursor.getColumnIndex(COL_POSTINGDATE));
+                    int headId = cursor.getInt(cursor.getColumnIndex(COL_HEADID));
+                    double incomeAmount= cursor.getDouble(cursor.getColumnIndex(COL_INCOMEAMOUNT));
+                    double expenseAmount= cursor.getDouble(cursor.getColumnIndex(COL_EXPENSEAMOUNT));
+                    String accountTypeName= cursor.getString(cursor.getColumnIndex(COL_ACCOUNTTYPE));
+                    String paymentMethodId=cursor.getString(cursor.getColumnIndex(COL_PAYMENTMETHODID));
+                    String chequeNo=cursor.getString(cursor.getColumnIndex(COL_CHEQUENO));
+                    String paymentStatusId=cursor.getString(cursor.getColumnIndex(COL_PAYMENTSTATUSID));
+                    String description= cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION));
+                    String journalRemark= cursor.getString(cursor.getColumnIndex(COL_JOURNALREMARK));
+                    String refrenceNum = cursor.getString(cursor.getColumnIndex(COL_REFERENCENUM));
+                    String createdate= cursor.getString(cursor.getColumnIndex(COL_CREATEDDATE));
+                    String updatedDate = cursor.getString(cursor.getColumnIndex(COL_UPDATEDDATE));
+                    int bankName = cursor.getInt(cursor.getColumnIndex(COL_BANKNAME));
+                    int accountName = cursor.getInt(cursor.getColumnIndex(COL_ACCOUNTNAME));
+
+                    incomeExpenseJournal = new IncomeExpenseJournal(
+                            transId,postingDate,headId, incomeAmount,expenseAmount,accountTypeName,paymentMethodId,
+                            chequeNo,paymentStatusId,description,journalRemark,refrenceNum,createdate,updatedDate,bankName,accountName
+                    );
+
+                }while (cursor.moveToNext());
+            }
+            cursor.close();
+
+            return incomeExpenseJournal;
+        }
+        catch (Exception ex){
+            throw  ex;
         }
     }
 
