@@ -204,6 +204,57 @@ public class IncomeExpenseJournalHelper {
         }
     }
 
+//    start checking
+
+    public int checkAcchead(int headid){
+        database = databaseHelper.getReadableDatabase();
+        Cursor cursor = database.query(TABLE_INCOMEEXPENSEJOURNAL,new String[]{COL_TRANSID},COL_HEADID+"=?",new String[]{Integer.toString(headid)},null,null,null);
+        ArrayList<IncomeExpenseJournal> incomeExpenseJournalArrayList=new ArrayList<>();
+        if(cursor.moveToFirst()){
+            do{
+                IncomeExpenseJournal incomeExpenseJournal=new IncomeExpenseJournal();
+                incomeExpenseJournal.setTransId( cursor.getInt(cursor.getColumnIndex(COL_TRANSID)));
+                incomeExpenseJournalArrayList.add(incomeExpenseJournal);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return incomeExpenseJournalArrayList.size();
+    }
+    public int checkBank(int bankid){
+        database = databaseHelper.getReadableDatabase();
+        Cursor cursor = database.query(TABLE_INCOMEEXPENSEJOURNAL,new String[]{COL_TRANSID},COL_BANKNAME+"=?",new String[]{Integer.toString(bankid)},null,null,null);
+        ArrayList<IncomeExpenseJournal> incomeExpenseJournalArrayList=new ArrayList<>();
+        if(cursor.moveToFirst()){
+            do{
+                IncomeExpenseJournal incomeExpenseJournal=new IncomeExpenseJournal();
+                incomeExpenseJournal.setTransId( cursor.getInt(cursor.getColumnIndex(COL_TRANSID)));
+                incomeExpenseJournalArrayList.add(incomeExpenseJournal);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return incomeExpenseJournalArrayList.size();
+    }
+
+    public int checkBankAcc(int bankAccId){
+        database = databaseHelper.getReadableDatabase();
+        Cursor cursor = database.query(TABLE_INCOMEEXPENSEJOURNAL,new String[]{COL_TRANSID},COL_ACCOUNTNAME+"=?",new String[]{Integer.toString(bankAccId)},null,null,null);
+        ArrayList<IncomeExpenseJournal> incomeExpenseJournalArrayList=new ArrayList<>();
+        if(cursor.moveToFirst()){
+            do{
+                IncomeExpenseJournal incomeExpenseJournal=new IncomeExpenseJournal();
+                incomeExpenseJournal.setTransId( cursor.getInt(cursor.getColumnIndex(COL_TRANSID)));
+                incomeExpenseJournalArrayList.add(incomeExpenseJournal);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return incomeExpenseJournalArrayList.size();
+    }
+
+//    end checking
+
     public IncomeExpenseJournal getIncomeExpenseByTransId(int id){
         try{
             database = databaseHelper.getReadableDatabase();

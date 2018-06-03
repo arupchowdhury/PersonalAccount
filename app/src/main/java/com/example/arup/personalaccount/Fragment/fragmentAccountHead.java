@@ -18,8 +18,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.arup.personalaccount.DBHelper.AccountHeadHelper;
+import com.example.arup.personalaccount.DBHelper.IncomeExpenseJournalHelper;
 import com.example.arup.personalaccount.FragmentList.fragmentAccountHeadList;
 import com.example.arup.personalaccount.Model.IncomeExpenseHead;
+import com.example.arup.personalaccount.Model.IncomeExpenseJournal;
 import com.example.arup.personalaccount.R;
 
 import java.util.Arrays;
@@ -83,6 +85,13 @@ public class fragmentAccountHead extends Fragment implements View.OnClickListene
         Toast.makeText(getActivity(),""+incomeExpenseHead.getHeadName(),Toast.LENGTH_LONG).show();
         int index = Arrays.asList(headtypelist).indexOf(incomeExpenseHead.getHeadType());
         spHeadType.setSelection(index);
+
+        IncomeExpenseJournalHelper incomeExpenseJournalHelper = new IncomeExpenseJournalHelper(getActivity());
+        int headid = incomeExpenseJournalHelper.checkAcchead(incomeExpenseHead.getHeadId());
+        if(headid>0){
+            btnSaveAccHead.setEnabled(false);
+            btnDeleteAccHead.setEnabled(false);
+        }
     }
 
     @Override
@@ -164,5 +173,7 @@ public class fragmentAccountHead extends Fragment implements View.OnClickListene
         etHeadId.setText("");
         etHeadName.setText("");
         spinHeadTypeAdapter();
+        btnSaveAccHead.setEnabled(true);
+        btnDeleteAccHead.setEnabled(true);
     }
 }

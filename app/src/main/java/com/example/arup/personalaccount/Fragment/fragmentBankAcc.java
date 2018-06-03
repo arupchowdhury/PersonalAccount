@@ -21,6 +21,7 @@ import android.widget.Toolbar;
 
 import com.example.arup.personalaccount.DBHelper.BankAccInfoHelper;
 import com.example.arup.personalaccount.DBHelper.BankInfoHelper;
+import com.example.arup.personalaccount.DBHelper.IncomeExpenseJournalHelper;
 import com.example.arup.personalaccount.FragmentList.fragmentBankAccountList;
 import com.example.arup.personalaccount.Model.BankAccInformation;
 import com.example.arup.personalaccount.Model.BankInformation;
@@ -97,7 +98,7 @@ public class fragmentBankAcc extends Fragment implements View.OnClickListener{
 
     public void loadspinBankId(){
         bankInfoHelper = new BankInfoHelper(getActivity());
-        ArrayList<BankInformation> bankInformationArrayList = bankInfoHelper.getBankList();
+        ArrayList<BankInformation> bankInformationArrayList = bankInfoHelper.getcboBankList();
         bankInformationArrayAdapter = new ArrayAdapter<BankInformation>(getActivity(),android.R.layout.simple_spinner_dropdown_item,bankInformationArrayList);
         spinBAnkId.setAdapter(bankInformationArrayAdapter);
     }
@@ -109,8 +110,14 @@ public class fragmentBankAcc extends Fragment implements View.OnClickListener{
         etAccName.setText(bankAccInformation.getAccName());
         etBranchName.setText(bankAccInformation.getBranchName());
         Toast.makeText(getActivity(),""+bankAccInformation.getAccName(),Toast.LENGTH_LONG).show();
-        int index = getIndex(bankInformationArrayAdapter,Integer.toString(bankAccInformation.getBankId()));
-        spinBAnkId.setSelection(getIndex(bankInformationArrayAdapter,Integer.toString(index)));
+        //int index = getIndex(bankInformationArrayAdapter,Integer.toString(bankAccInformation.getBankId()));
+        spinBAnkId.setSelection(getIndex(bankInformationArrayAdapter,Integer.toString(bankAccInformation.getBankId())));
+
+        IncomeExpenseJournalHelper incomeExpenseJournalHelper = new IncomeExpenseJournalHelper(getActivity());
+        if(incomeExpenseJournalHelper.checkBankAcc(bankAccInformation.getAccId())>0){
+            btnSaveAcc.setEnabled(false);
+            btnDeleteAcc.setEnabled(false);
+        }
 
     }
     @Override
@@ -152,7 +159,7 @@ public class fragmentBankAcc extends Fragment implements View.OnClickListener{
             else if(v==btnDeleteAcc){
 
                 try{
-
+                    bankAccInfoHelper = new BankAccInfoHelper(getActivity());
                     if(etBankAccId.getText().toString().equals(""))
                         return;
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -212,5 +219,7 @@ public class fragmentBankAcc extends Fragment implements View.OnClickListener{
         etAccName.setText("");
         etBranchName.setText("");
         loadspinBankId();
+        btnSaveAcc.setEnabled(true);
+        btnDeleteAcc.setEnabled(true);
     }
 }

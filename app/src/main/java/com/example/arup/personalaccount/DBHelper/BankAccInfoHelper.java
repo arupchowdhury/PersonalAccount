@@ -25,13 +25,16 @@ public class BankAccInfoHelper {
             COL_BRANCHNAME+" TEXT"+
             ")";
 
-    private String queryjoin = "SELECT T0.*,T1.bankName FROM BankAccInfo T0,BankInfo T1 WHERE T0.bankId=T1.bankId";
+
 
     DatabaseHelper databaseHelper;
     SQLiteDatabase database;
+    BankInfoHelper bankInfoHelper;
 
     public BankAccInfoHelper(Context context) {
+
         this.databaseHelper = new DatabaseHelper(context);
+        bankInfoHelper = new BankInfoHelper(context);
     }
 
     public long insertBankAccInfo(BankAccInformation bankAccInformation){
@@ -89,6 +92,7 @@ public class BankAccInfoHelper {
 
     public ArrayList<BankAccInformation> getBakAccList(){
         try{
+            String queryjoin = "SELECT T0.*,T1.bankName FROM "+TABLE_BANKACCINFO+" T0 INNER JOIN "+bankInfoHelper.TABLE_BANKINFO+" T1 ON T0."+COL_BANKID+"=T1."+bankInfoHelper.COL_BANKID;
             database = databaseHelper.getReadableDatabase();
             Cursor cursor = database.rawQuery(queryjoin,null);
             ArrayList<BankAccInformation> bankAccInformationArrayList= new ArrayList<BankAccInformation>();

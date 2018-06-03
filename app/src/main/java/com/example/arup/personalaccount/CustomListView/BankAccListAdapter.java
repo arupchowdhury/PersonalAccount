@@ -6,13 +6,16 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.arup.personalaccount.MainActivity;
 import com.example.arup.personalaccount.Model.BankAccInformation;
@@ -40,7 +43,7 @@ public class BankAccListAdapter extends ArrayAdapter<BankAccInformation> impleme
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        BankAccInformation bankAccInformation = getItem(lastPosition);
+        BankAccInformation bankAccInformation = getItem(position);
         final ViewHolder viewHolder;
         final View result;
 
@@ -55,6 +58,7 @@ public class BankAccListAdapter extends ArrayAdapter<BankAccInformation> impleme
             viewHolder.tvBankId=(TextView)convertView.findViewById(R.id.tvBankIdLV);
             viewHolder.tvBranchName=(TextView)convertView.findViewById(R.id.tvBranchNameLV);
             viewHolder.tvBankName = (TextView)convertView.findViewById(R.id.tvBankNamLVe);
+            viewHolder.layoutBancAcc = (LinearLayout)convertView.findViewById(R.id.layoutBancAcc);
 
             result = convertView;
             convertView.setTag(viewHolder);
@@ -71,7 +75,7 @@ public class BankAccListAdapter extends ArrayAdapter<BankAccInformation> impleme
         viewHolder.tvBankName.setText(bankAccInformation.getBankName());
         viewHolder.tvBranchName.setText(bankAccInformation.getBranchName());
 
-        viewHolder.tvBankAccName.setOnClickListener(new View.OnClickListener() {
+        viewHolder.layoutBancAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CharSequence events[] = new CharSequence[] {"Edit", "Delete"};
@@ -85,50 +89,8 @@ public class BankAccListAdapter extends ArrayAdapter<BankAccInformation> impleme
                             Intent intent = new Intent(context, MainActivity.class);
                             intent.putExtra("fragment","fragmentBankAcc");
                             intent.putExtra("id",viewHolder.tvBankAccId.getText().toString());
-                            startActivity(getContext(),intent,null);
-                        }
-                    }
-                });
-                builderdialog.show();
-            }
-        });
-
-        viewHolder.tvBankName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CharSequence events[] = new CharSequence[] {"Edit", "Delete"};
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Action");
-
-                final AlertDialog.Builder builderdialog = builder.setItems(events, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(which==0 || which==1){
-                            Intent intent = new Intent(context, MainActivity.class);
-                            intent.putExtra("fragment","fragmentBankAcc");
-                            intent.putExtra("id",viewHolder.tvBankAccId.getText().toString());
-                            startActivity(getContext(),intent,null);
-                        }
-                    }
-                });
-                builderdialog.show();
-            }
-        });
-
-        viewHolder.tvBranchName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CharSequence events[] = new CharSequence[] {"Edit", "Delete"};
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Action");
-
-                final AlertDialog.Builder builderdialog = builder.setItems(events, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(which==0 || which==1){
-                            Intent intent = new Intent(context, MainActivity.class);
-                            intent.putExtra("fragment","fragmentBankAcc");
-                            intent.putExtra("id",viewHolder.tvBankAccId.getText().toString());
+                            Toast.makeText(context,""+viewHolder.tvBankAccId.getText().toString(),Toast.LENGTH_LONG).show();
+                            Log.i("Show loag ",viewHolder.tvBankAccId.getText().toString());
                             startActivity(getContext(),intent,null);
                         }
                     }
@@ -196,5 +158,6 @@ public class BankAccListAdapter extends ArrayAdapter<BankAccInformation> impleme
         TextView tvBankAccName;
         TextView tvBranchName;
         TextView tvBankName;
+        LinearLayout layoutBancAcc;
     }
 }

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class fragmentBankAccountList extends Fragment implements View.OnClickListener,SearchView.OnQueryTextListener {
 
 
-    ArrayList<BankAccInformation> dataModels;
+
     //BankInfoHelper  bankInfoHelper;
     ListView listView;
     Button btnAddNewBankAcc;
@@ -51,18 +51,18 @@ public class fragmentBankAccountList extends Fragment implements View.OnClickLis
         listView=(ListView)view.findViewById(R.id.lvBankAccList);
         btnAddNewBankAcc = view.findViewById(R.id.btnAddNewBankAcc);
         bankAccInfoHelper = new BankAccInfoHelper(getContext());
-        dataModels= new ArrayList<BankAccInformation>();
+        //dataModels= new ArrayList<BankAccInformation>();
 
-        dataModels=bankAccInfoHelper.getBakAccList();
+        ArrayList<BankAccInformation> dataModels=bankAccInfoHelper.getBakAccList();
         adapter = new BankAccListAdapter(getActivity(),R.layout.bankacclistview,dataModels);
         listView.setAdapter(adapter);
 
         btnAddNewBankAcc.setOnClickListener(this);
 
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
 
-        listView.setTextFilterEnabled(false);
-        listView.setAdapter(adapter);
+        //listView.setTextFilterEnabled(false);
+        //listView.setAdapter(adapter);
         //filter = adapter.getFilter();
 
         return view;

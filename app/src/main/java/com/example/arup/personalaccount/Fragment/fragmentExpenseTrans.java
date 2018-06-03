@@ -94,14 +94,14 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
 
         loadspinExpense();
         loadspinPaymentMethodAdapter();
-        //initializeCboAll();
         loadspinPaymentStatusAdapter();
         loadBankInfoList();
         loadBankAccList(0);
 
+
+
         if(getArguments()!=null){
             String strtext = getArguments().getString("transId");
-            Toast.makeText(getActivity(),""+strtext,Toast.LENGTH_LONG).show();
             disableAllControl();
             loadAllContent(strtext);
         }
@@ -297,6 +297,9 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
         int indexPaymentStatus = Arrays.asList(paymentStatusArray).indexOf(incomeExpenseJournal.getPaymentStatusId());
         spinPaymentStatus.setSelection(indexPaymentStatus);
 
+        if(!incomeExpenseJournal.getRefrenceNum().matches(""))
+            disablebutton();
+
 
     }
 
@@ -332,7 +335,7 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
                     AtomicLong id = new AtomicLong();
                     String message="";
 
-                    if(!etTransIdExpense.getText().toString().matches("")){
+                    if(!etTransIdExpense.getText().toString().matches("") && etreferenceNo.getText().toString().matches("")){
                         int transId = Integer.parseInt(etTransIdExpense.getText().toString());
                         updatedDate=dateFormat.format(new Date());
                         IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
@@ -342,7 +345,7 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
                         id.set(incomeExpenseJournalHelper.updateIncomeExpenseJournal(incomeExpenseJournal));
                         message="Successfully updated";
                     }
-                    else {
+                    else if(etTransIdExpense.getText().toString().matches("")) {
                         IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
                                 postingDate,headId,incomeAmount,expenseAmount,accountTypeName,paymentMethodId,chequeNo,
                                 paymentStatusId,description,journalRemark,refrenceNum,createdate,updatedDate,bankName,accountName
@@ -355,8 +358,11 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
                         clearAll();
                     }
                     else {
-                        Toast.makeText(getActivity(),"Error",Toast.LENGTH_LONG).show();
-                        clearAll();
+                        if(!etreferenceNo.getText().toString().matches(""))
+                            Toast.makeText(getActivity(),"Document has been canceled",Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(getActivity(),"Error",Toast.LENGTH_LONG).show();
+                        //clearAll();
                     }
                 }
                 catch (Exception ex){
@@ -365,9 +371,14 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
             }
             else if(v==btnCancelExpense){
                 try{
-                    if(!etjournalRemark.getText().toString().matches(""))
+                    if(etTransIdExpense.getText().toString().matches(""))
+                        return;
+                    else if(!etjournalRemark.getText().toString().matches(""))
+                        return;
+                    else if(!etreferenceNo.getText().toString().matches(""))
                         return;
 
+                    incomeExpenseJournalHelper = new IncomeExpenseJournalHelper(getActivity());
                     int transId = Integer.parseInt(etTransIdExpense.getText().toString());
                     String postingDate=etpostingDate.getText().toString();
                     int headId =spinIncomeHeadVal;
@@ -386,9 +397,10 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
                     int bankName=spinBankNameVal;
                     int accountName=spinBankAccNoVal;
 
-                    AtomicLong id = new AtomicLong();
+                    AtomicLong idc = new AtomicLong();
                     AtomicLong idupdate = new AtomicLong();
                     String message="";
+
 
                     IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
                             postingDate,headId,incomeAmount,expenseAmount,accountTypeName,paymentMethodId,chequeNo,
@@ -401,10 +413,11 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
                     );
 
 
-                    id.set(incomeExpenseJournalHelper.insertIncomeExpenseJournal(incomeExpenseJournal));
+                    idc.set(incomeExpenseJournalHelper.insertIncomeExpenseJournal(incomeExpenseJournal));
+
                     idupdate.set(incomeExpenseJournalHelper.updateIncomeExpenseJournal(incomeExpenseJournalupdate));
                     message="Successfully updated";
-                    if(id.get()>0){
+                    if(idc.get()>0){
                         Toast.makeText(getActivity(),""+message,Toast.LENGTH_LONG).show();
                         clearAll();
                     }
@@ -461,12 +474,19 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
     }
 
     private boolean checkvalidation(){
-        if(etpostingDate.getText().toString().matches(""))
+        if(etpostingDate.getText().toString().matches("")){
+            Toast.makeText(getActivity(),"Posting date required",Toast.LENGTH_LONG).show();
             return false;
-        else if(spinIncomeHeadVal==0)
+        }
+
+        else if(spinIncomeHeadVal==0){
+            Toast.makeText(getActivity(),"Expense head required",Toast.LENGTH_LONG).show();
             return false;
-        else if(etexpenseAmount.getText().toString().matches("0"))
+        }
+        else if(etexpenseAmount.getText().toString().matches("")){
+            Toast.makeText(getActivity(),"Expense amount required",Toast.LENGTH_LONG).show();
             return false;
+        }
         else
             return true;
     }
@@ -500,5 +520,13 @@ IncomeExpenseJournalHelper incomeExpenseJournalHelper;
         loadspinPaymentStatusAdapter();
         loadBankInfoList();
         loadBankAccList(0);
+
+        btnSaveExpense.setEnabled(true);
+        btnCancelExpense.setEnabled(true);
+    }
+
+    private void disablebutton(){
+        btnSaveExpense.setEnabled(false);
+        btnCancelExpense.setEnabled(false);
     }
 }

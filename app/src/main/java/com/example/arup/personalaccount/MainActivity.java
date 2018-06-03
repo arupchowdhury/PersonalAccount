@@ -51,13 +51,14 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.commit();
             }
             else if(fragment.equals("fragmentBankAcc")){
+                Toast.makeText(this,""+parm,Toast.LENGTH_LONG).show();
                 Bundle bundle = new Bundle();
                 bundle.putString("accId",parm);
-                fragmentBankAcc fragmentBankAcc = new fragmentBankAcc();
-                fragmentBankAcc.setArguments(bundle);
+                fragmentBankAcc fragmentBankAccc = new fragmentBankAcc();
+                fragmentBankAccc.setArguments(bundle);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frmMainContainer, fragmentBankAcc);
+                fragmentTransaction.replace(R.id.frmMainContainer, fragmentBankAccc);
                 fragmentTransaction.commit();
             }
             //fragmentExpenseTrans

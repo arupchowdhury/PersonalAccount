@@ -298,6 +298,9 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener {
         int indexPaymentStatus = Arrays.asList(paymentStatusArray).indexOf(incomeExpenseJournal.getPaymentStatusId());
         spinPaymentStatus.setSelection(indexPaymentStatus);
 
+        if(!incomeExpenseJournal.getRefrenceNum().matches(""))
+            disablebutton();
+
 
     }
 
@@ -318,12 +321,19 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener {
     }
 
     private boolean checkvalidation(){
-        if(etpostingDate.getText().toString().matches(""))
+        if(etpostingDate.getText().toString().matches("")){
+            Toast.makeText(getActivity(),"Posting date required",Toast.LENGTH_LONG).show();
             return false;
-        else if(spinIncomeHeadVal==0)
+        }
+
+        else if(spinIncomeHeadVal==0){
+            Toast.makeText(getActivity(),"Income head required",Toast.LENGTH_LONG).show();
             return false;
-        else if(etexpenseAmount.getText().toString().matches("0"))
+        }
+        else if(etexpenseAmount.getText().toString().matches("")){
+            Toast.makeText(getActivity(),"Income amount required",Toast.LENGTH_LONG).show();
             return false;
+        }
         else
             return true;
     }
@@ -357,6 +367,9 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener {
         loadspinPaymentStatusAdapter();
         loadBankInfoList();
         loadBankAccList(0);
+
+        btnSaveExpense.setEnabled(true);
+        btnCancelExpense.setEnabled(true);
     }
 
     @Override
@@ -391,7 +404,7 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener {
                     AtomicLong id = new AtomicLong();
                     String message="";
 
-                    if(!etTransIdExpense.getText().toString().matches("")){
+                    if(!etTransIdExpense.getText().toString().matches("")&& etreferenceNo.getText().toString().matches("")){
                         int transId = Integer.parseInt(etTransIdExpense.getText().toString());
                         updatedDate=dateFormat.format(new Date());
                         IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
@@ -401,7 +414,7 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener {
                         id.set(incomeExpenseJournalHelper.updateIncomeExpenseJournal(incomeExpenseJournal));
                         message="Successfully updated";
                     }
-                    else {
+                    else if(etTransIdExpense.getText().toString().matches("")){
                         IncomeExpenseJournal incomeExpenseJournal = new IncomeExpenseJournal(
                                 postingDate,headId,incomeAmount,expenseAmount,accountTypeName,paymentMethodId,chequeNo,
                                 paymentStatusId,description,journalRemark,refrenceNum,createdate,updatedDate,bankName,accountName
@@ -414,8 +427,11 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener {
                         clearAll();
                     }
                     else {
-                        Toast.makeText(getActivity(),"Error",Toast.LENGTH_LONG).show();
-                        clearAll();
+                        if(!etreferenceNo.getText().toString().matches(""))
+                            Toast.makeText(getActivity(),"Document has been canceled",Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(getActivity(),"Error",Toast.LENGTH_LONG).show();
+                        //clearAll();
                     }
                 }
                 catch (Exception ex){
@@ -425,8 +441,19 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener {
             else if(v==btnCancelExpense){
                 try{
 
-                    if(!etjournalRemark.getText().toString().matches(""))
+                    if(etTransIdExpense.getText().toString().matches("")){
+                        Toast.makeText(getActivity(),"Document has been Canceled",Toast.LENGTH_LONG).show();
                         return;
+                    }
+
+                    else if(!etjournalRemark.getText().toString().matches("")){
+                        Toast.makeText(getActivity(),"Document has been Canceled",Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    else if(!etreferenceNo.getText().toString().matches("")){
+                        Toast.makeText(getActivity(),"Document has been Canceled",Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
                     incomeExpenseJournalHelper = new IncomeExpenseJournalHelper(getActivity());
                     int transId = Integer.parseInt(etTransIdExpense.getText().toString());
@@ -504,5 +531,10 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener {
         String date = year+"/"+month+"/"+day+" 00:00:00";//str.append(day)+str.append(:)+str.append(month)+"/"+str.append(year);
         etpostingDate.setText(date);
 
+    }
+
+    private void disablebutton(){
+        btnSaveExpense.setEnabled(false);
+        btnCancelExpense.setEnabled(false);
     }
 }
