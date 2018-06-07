@@ -104,17 +104,9 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener, Ad
         loadspinExpense();
         loadspinPaymentMethodAdapter();
         loadspinPaymentStatusAdapter();
-        loadBankInfoList();
-        loadBankAccList(0);
-        //endregion
-
-        //region get data from list
-        if(getArguments()!=null){
-            String strtext = getArguments().getString("transId");
-            Toast.makeText(getActivity(),""+strtext,Toast.LENGTH_LONG).show();
-            disableAllControl();
-            loadAllContent(strtext);
-        }
+        initializeCboAll();
+//        loadBankInfoList();
+//        loadBankAccList(0);
         //endregion
 
         //region Drop down selected
@@ -130,6 +122,15 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener, Ad
         etpostingDate.setOnClickListener(this);
         btnRefreshExpense.setOnClickListener(this);
 
+        //endregion
+
+        //region get data from list
+        if(getArguments()!=null){
+            String strtext = getArguments().getString("transId");
+            Toast.makeText(getActivity(),""+strtext,Toast.LENGTH_LONG).show();
+            disableAllControl();
+            loadAllContent(strtext);
+        }
         //endregion
         return view;
     }
@@ -257,10 +258,10 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener, Ad
     }
 
     private void initializeCboAll(){
-//        ArrayList<BankInformation> bankInformationArrayList = new ArrayList<>();
-//        bankInformationArrayList.add(new BankInformation(0,"--Select Bank--"));
-//        adapterBankInfo = new ArrayAdapter<BankInformation>(getActivity(),android.R.layout.simple_spinner_dropdown_item,bankInformationArrayList);
-//        spinBankId.setAdapter(adapterBankInfo);
+        ArrayList<BankInformation> bankInformationArrayList = new ArrayList<>();
+        bankInformationArrayList.add(new BankInformation(0,"--Select Bank--"));
+        adapterBankInfo = new ArrayAdapter<BankInformation>(getActivity(),android.R.layout.simple_spinner_dropdown_item,bankInformationArrayList);
+        spinBankId.setAdapter(adapterBankInfo);
 
         ArrayList<BankAccInformation> bankAccInformationArrayList = new ArrayList<>();
         bankAccInformationArrayList.add(new BankAccInformation(0,"--Select Accunt--"));
@@ -416,6 +417,7 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener, Ad
         etexpenseAmount.setEnabled(true);
         etchequeNo.setEnabled(true);
         etpostingDate.setEnabled(true);
+        spinPaymentStatus.setEnabled(true);
 
         etexpenseAmount.setText("");
         etchequeNo.setText("");
@@ -469,11 +471,20 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener, Ad
             spinIncomeHeadVal=incomeExpenseHead.getHeadId();
         }
         else if(parent==spinPaymentMethod){
-            Toast.makeText(getActivity(),"Bank",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),""+spinPaymentMethod.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
+            if(spinPaymentMethod.getSelectedItem().toString()=="Bank"){
+                if(spinBankId.getSelectedItemId()==0)
+                    loadBankInfoList();
+            }
+            else{
+                initializeCboAll();
+            }
         }
         else if(parent==spinBankId){
             BankInformation bankInformation = (BankInformation) parent.getSelectedItem();
             spinBankNameVal=bankInformation.getBankId();
+            if(spinBankAcc.getSelectedItemId()==0)
+                loadBankAccList(spinBankNameVal);
         }
         else if(parent==spinBankAcc){
             BankAccInformation bankAccInformation=(BankAccInformation)parent.getSelectedItem();
@@ -508,9 +519,9 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener, Ad
 
         int index = Arrays.asList(paymentMethodarry).indexOf(incomeExpenseJournal.getPaymentMethodId());
         spinPaymentMethod.setSelection(index);
-//        loadBankInfoList();
-        /*if(incomeExpenseJournal.getPaymentMethodId().equals("Bank")){
-//            loadBankInfoList();
+
+        if(incomeExpenseJournal.getPaymentMethodId().equals("Bank")){
+            loadBankInfoList();
 
             spinBankId.setSelection(getIndexBank(adapterBankInfo,Integer.toString(incomeExpenseJournal.getBankName())));
             spinBankNameVal=incomeExpenseJournal.getBankName();
@@ -518,18 +529,13 @@ public class fragmentIncomeTrans extends Fragment implements OnClickListener, Ad
             loadBankAccList(incomeExpenseJournal.getBankName());
             spinBankAcc.setSelection(getIndexBankAcc(adapterBankAccInfo,Integer.toString(incomeExpenseJournal.getAccountName())));
             spinBankAccNoVal=incomeExpenseJournal.getAccountName();
-        }*/
+        }
 
-        spinBankId.setSelection(getIndexBank(adapterBankInfo,Integer.toString(incomeExpenseJournal.getBankName())));
-        spinBankNameVal=incomeExpenseJournal.getBankName();
-
-        //loadBankAccList(incomeExpenseJournal.getBankName());
-        spinBankAcc.setSelection(getIndexBankAcc(adapterBankAccInfo,Integer.toString(incomeExpenseJournal.getAccountName())));
-        spinBankAccNoVal=incomeExpenseJournal.getAccountName();
-
-
+        if(incomeExpenseJournal.getPaymentStatusId().equals("Paid"))
+            spinPaymentStatus.setEnabled(false);
         int indexPaymentStatus = Arrays.asList(paymentStatusArray).indexOf(incomeExpenseJournal.getPaymentStatusId());
         spinPaymentStatus.setSelection(indexPaymentStatus);
+
 
         if(!incomeExpenseJournal.getRefrenceNum().matches(""))
             disablebutton();
