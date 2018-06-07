@@ -1,93 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    tools:context=".Fragment.fragmentBankAcc">
-    <android.support.v7.widget.Toolbar
+    tools:context=".Fragment.fragmentBankAcc"
+    android:orientation="vertical"
+    >
+    <!--<android.support.v7.widget.Toolbar
         android:id="@+id/toobarAcc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@android:dimen/app_icon_size"
         android:theme="@style/AlertDialog.AppCompat.Light"
         />
-
+-->
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="20dp"
-        android:text="Bank Account" />
-
-    <EditText
-        android:id="@+id/etBankAccIdAcc"
-        android:layout_width="379dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="48dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Bank Acc Id" />
-
-    <Spinner
-        android:id="@+id/spinBankIdAcc"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="110dp" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="10dp"
+        >
 
-    <EditText
-        android:id="@+id/etAccNameAcc"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Bank Account"
+            android:gravity="center"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="150dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Acc No" />
+        android:layout_marginTop="0dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <EditText
-        android:id="@+id/etBranchNameAcc"
+        <EditText
+            android:id="@+id/etBankAccIdAcc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Bank Acc Id"
+            android:inputType="textPersonName" />
+
+        <Spinner
+            android:id="@+id/spinBankIdAcc"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+             />
+
+        <EditText
+            android:id="@+id/etAccNameAcc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Acc No"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/etBranchNameAcc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Branch Name"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="211dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Branch Name" />
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btnSaveAcc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="27dp"
-        android:layout_marginStart="16dp"
-        android:text="Save" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal"
+                android:gravity="bottom"
+                >
 
-    <Button
-        android:id="@+id/btnDeleteAcc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/btnSaveAcc"
-        android:layout_marginEnd="19dp"
-        android:text="Delete" />
+                <Button
+                    android:id="@+id/btnSaveAcc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save" />
 
-    <Button
-        android:id="@+id/btnRefreshBankAcc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btnSaveAcc"
-        android:layout_centerHorizontal="true"
-        android:text="Refresh" />
+                <Button
+                    android:id="@+id/btnDeleteAcc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete" />
 
+                <Button
+                    android:id="@+id/btnRefreshBankAcc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Refresh" />
 
-</RelativeLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
