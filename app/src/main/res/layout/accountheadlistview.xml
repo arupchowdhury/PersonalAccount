@@ -3,42 +3,50 @@
     android:id="@+id/accountheadList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:orientation="vertical"
+    android:layout_margin="0dp"
+    android:orientation="horizontal"
     android:padding="5dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_weight="2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:padding="5dp">
+        android:orientation="vertical"
+       >
 
         <TextView
             android:id="@+id/tvHeadId"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:textSize="20dp" />
+            android:visibility="visible"
+            android:text="Head Id"
+            />
 
         <TextView
             android:id="@+id/tvAccountHeadName"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+
             android:text="Income Expense Head"
             android:textColor="#5e5a5a"
-            android:textSize="20dp" />
+            />
 
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tvAccountHeadType"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Head Type"
+            android:gravity="right"
             android:textColor="#5e5a5a"
-            android:textSize="20dp" />
-
+            />
     </LinearLayout>
 
 
