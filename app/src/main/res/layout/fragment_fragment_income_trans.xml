@@ -51,7 +51,8 @@
                 <Spinner
                     android:id="@+id/spinAccountHead"
                     android:layout_width="match_parent"
-                    android:layout_height="41dp"
+                    android:layout_height="48dp"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
                     tools:ignore="UnknownId" />
 
                 <EditText
@@ -64,19 +65,22 @@
                 <Spinner
                     android:id="@+id/spinPaymentMethod"
                     android:layout_width="match_parent"
-                    android:layout_height="41dp"
+                    android:layout_height="48dp"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
                     />
 
                 <Spinner
                     android:id="@+id/spinBankName"
                     android:layout_width="match_parent"
-                    android:layout_height="41dp"
+                    android:layout_height="48dp"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
                     />
 
                 <Spinner
                     android:id="@+id/spinBankAcc"
                     android:layout_width="match_parent"
-                    android:layout_height="41dp"
+                    android:layout_height="48dp"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
                     />
 
                 <EditText
@@ -116,7 +120,8 @@
                 <Spinner
                     android:id="@+id/spinPaymentStatus"
                     android:layout_width="match_parent"
-                    android:layout_height="41dp"
+                    android:layout_height="48dp"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
                     />
 
                 <EditText
